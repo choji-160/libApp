@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, unnecessary_string_interpolations, sort_child_properties_last, prefer_const_constructors, unnecessary_null_comparison, prefer_if_null_operators, avoid_print
 
 import 'package:librairiedumaroc/views/salesdetailpagefortheday.dart';
 import 'package:flutter/material.dart';
@@ -19,16 +19,19 @@ import '../services/Credits.dart';
 import '../services/SoldArticles.dart';
 
 class daysAnaliticsPage extends StatefulWidget {
-  final List<DateTime> days;
-  const daysAnaliticsPage({Key? key, required this.days});
+  final DateTime day1;
+  final DateTime day2;
+  const daysAnaliticsPage({Key? key, required this.day1, required this.day2});
 
   @override
-  State<daysAnaliticsPage> createState() => _daysAnaliticsPageState(days: days);
+  State<daysAnaliticsPage> createState() =>
+      _daysAnaliticsPageState(day1: day1, day2: day2);
 }
 
 class _daysAnaliticsPageState extends State<daysAnaliticsPage> {
-  final List<DateTime> days;
-  _daysAnaliticsPageState({Key? key, required this.days});
+  final DateTime day1;
+  final DateTime day2;
+  _daysAnaliticsPageState({Key? key, required this.day1, required this.day2});
   List<Sale>? sales;
   List<Sale>? salesToday;
   List<SoldArticle>? soldarticles;
@@ -89,7 +92,7 @@ class _daysAnaliticsPageState extends State<daysAnaliticsPage> {
 
   getClient() async {
     clients = await Clients().getClients();
-    if (articles != null) {
+    if (clients != null) {
       setState(() {
         isLoaded = true;
       });
@@ -98,7 +101,7 @@ class _daysAnaliticsPageState extends State<daysAnaliticsPage> {
 
   getCredit() async {
     credits = await Credits().getCredits();
-    if (articles != null) {
+    if (credits != null) {
       setState(() {
         isLoaded = true;
       });
@@ -107,7 +110,7 @@ class _daysAnaliticsPageState extends State<daysAnaliticsPage> {
 
   getReturns() async {
     returns = await Returns().getReturns();
-    if (articles != null) {
+    if (returns != null) {
       setState(() {
         isLoaded = true;
       });
@@ -116,7 +119,7 @@ class _daysAnaliticsPageState extends State<daysAnaliticsPage> {
 
   getReturnedAtricles() async {
     returnedArticles = await ReturnedArticles().getReturnedAtricles();
-    if (articles != null) {
+    if (returnedArticles != null) {
       setState(() {
         isLoaded = true;
       });
@@ -135,10 +138,42 @@ class _daysAnaliticsPageState extends State<daysAnaliticsPage> {
         .toList();
   }
 
+  late List<DateTime> days;
+  updateDates() {
+    DateTime startDateAsDate = day1;
+    DateTime endDateAsDate = day2;
+    DateTime startDateNullCheck() {
+      return startDateAsDate == null
+          ? DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          : startDateAsDate;
+    }
+
+    DateTime endDateNullCheck() {
+      return endDateAsDate == null
+          ? DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          : endDateAsDate;
+    }
+
+    getDaysInBetween() {
+      final int difference =
+          endDateNullCheck().difference(startDateNullCheck()).inDays + 1;
+      return difference;
+    }
+
+    days = List<DateTime>.generate(getDaysInBetween(), (i) {
+      DateTime date = startDateNullCheck();
+
+      return date.add(Duration(days: i));
+    });
+  }
+
   List salesTotals = [];
   List creditsTotals = [];
   List returnsTotals = [];
-  dateView() {
+  Widget dateView() {
+    updateDates();
     num periodSalesSum = 0;
     num periodCreditsSum = 0;
     num periodReturnsSum = 0;
@@ -449,14 +484,14 @@ class _daysAnaliticsPageState extends State<daysAnaliticsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Visibility(
-        visible: isLoaded,
-        replacement: const Center(
-          child: CircularProgressIndicator(),
+        drawerScrimColor: Color(0xff000000),
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
         ),
-        child: dateView(),
-      ),
+      body:dateView(),
     );
   }
 }
