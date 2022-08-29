@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables
+import 'package:librairiedumaroc/views/daysAnaliticsPage.dart';
 import 'package:librairiedumaroc/views/salesdetailpagefortheday.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flutter/material.dart';
@@ -801,7 +802,13 @@ class _salesPageState extends State<salesPage> {
                             updateDates(
                                 DateTime.parse(startDate!.substring(33, 43)),
                                 DateTime.parse(endDate!.substring(10, 20)));
-                            dateView();
+                            // dateView();
+                            
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    daysAnaliticsPage(days: days)));
                           },
                           child: Icon(Icons.search)),
                     ],
