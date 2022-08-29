@@ -990,6 +990,3 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
         body: homePageData());
   }
 }
-
-
-
