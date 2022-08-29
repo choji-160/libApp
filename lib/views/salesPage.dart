@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables
-import 'package:librairiedumaroc/views/daysAnaliticsPage.dart';
 import 'package:librairiedumaroc/views/salesdetailpagefortheday.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flutter/material.dart';
@@ -177,334 +176,334 @@ class _salesPageState extends State<salesPage> {
     });
   }
 
-  // List salesTotals = [];
-  // List creditsTotals = [];
-  // List returnsTotals = [];
-  // dateView() {
-  //   num periodSalesSum = 0;
-  //   num periodCreditsSum = 0;
-  //   num periodReturnsSum = 0;
-  //   salesTotals.clear();
-  //   creditsTotals.clear();
-  //   returnsTotals.clear();
-  //   for (var day in days) {
-  //     salessum = 0;
-  //     creditssum = 0;
-  //     returnssum = 0;
-  //     salesToday = sales
-  //         ?.where((element) =>
-  //             element.dateVent ==
-  //             '${day.toString().substring(0, 10)}T00:00:00.000Z')
-  //         .toList();
-  //     for (int e = 0; e < salesToday!.length; e++) {
-  //       salessum = salessum! + salesToday![e].totale!;
-  //     }
-  //     creditsToday = credits
-  //         ?.where((element) =>
-  //             element.date ==
-  //             '${day.toString().substring(0, 10)}T00:00:00.000Z')
-  //         .toList();
-  //     for (int e = 0; e < creditsToday!.length; e++) {
-  //       creditssum = creditssum! +
-  //           (creditsToday![e].total == null ? 0 : creditsToday![e].total!);
-  //     }
-  //     returnsToday = returns
-  //         ?.where((element) =>
-  //             element.dateRetour ==
-  //             '${day.toString().substring(0, 10)}T00:00:00.000Z')
-  //         .toList();
-  //     for (int e = 0; e < returnsToday!.length; e++) {
-  //       returnssum = returnssum! + returnsToday![e].total!;
-  //     }
-  //     salesTotals.add(salessum!.toStringAsFixed(2));
-  //     creditsTotals.add(creditssum!.toStringAsFixed(2));
-  //     returnsTotals.add(returnssum!.toStringAsFixed(2));
-  //   }
+  List salesTotals = [];
+  List creditsTotals = [];
+  List returnsTotals = [];
+  dateView() {
+    num periodSalesSum = 0;
+    num periodCreditsSum = 0;
+    num periodReturnsSum = 0;
+    salesTotals.clear();
+    creditsTotals.clear();
+    returnsTotals.clear();
+    for (var day in days) {
+      salessum = 0;
+      creditssum = 0;
+      returnssum = 0;
+      salesToday = sales
+          ?.where((element) =>
+              element.dateVent ==
+              '${day.toString().substring(0, 10)}T00:00:00.000Z')
+          .toList();
+      for (int e = 0; e < salesToday!.length; e++) {
+        salessum = salessum! + salesToday![e].totale!;
+      }
+      creditsToday = credits
+          ?.where((element) =>
+              element.date ==
+              '${day.toString().substring(0, 10)}T00:00:00.000Z')
+          .toList();
+      for (int e = 0; e < creditsToday!.length; e++) {
+        creditssum = creditssum! +
+            (creditsToday![e].total == null ? 0 : creditsToday![e].total!);
+      }
+      returnsToday = returns
+          ?.where((element) =>
+              element.dateRetour ==
+              '${day.toString().substring(0, 10)}T00:00:00.000Z')
+          .toList();
+      for (int e = 0; e < returnsToday!.length; e++) {
+        returnssum = returnssum! + returnsToday![e].total!;
+      }
+      salesTotals.add(salessum!.toStringAsFixed(2));
+      creditsTotals.add(creditssum!.toStringAsFixed(2));
+      returnsTotals.add(returnssum!.toStringAsFixed(2));
+    }
 
-  //   for (int e = 0; e < salesTotals.length; e++) {
-  //     periodSalesSum = periodSalesSum + num.parse(salesTotals[e]);
-  //   }
-  //   for (int e = 0; e < creditsTotals.length; e++) {
-  //     periodCreditsSum = periodCreditsSum + num.parse(creditsTotals[e]);
-  //   }
-  //   for (int e = 0; e < returnsTotals.length; e++) {
-  //     periodReturnsSum = periodReturnsSum + num.parse(returnsTotals[e]);
-  //   }
+    for (int e = 0; e < salesTotals.length; e++) {
+      periodSalesSum = periodSalesSum + num.parse(salesTotals[e]);
+    }
+    for (int e = 0; e < creditsTotals.length; e++) {
+      periodCreditsSum = periodCreditsSum + num.parse(creditsTotals[e]);
+    }
+    for (int e = 0; e < returnsTotals.length; e++) {
+      periodReturnsSum = periodReturnsSum + num.parse(returnsTotals[e]);
+    }
 
-  //   return showModalBottomSheet(
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: const BorderRadius.only(
-  //             topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-  //       ),
-  //       isScrollControlled: true,
-  //       context: context,
-  //       builder: (BuildContext bc) {
-  //         return Container(
-  //           height: MediaQuery.of(context).size.height * 0.8,
-  //           child: Column(
-  //             children: [
-  //               Text("Statistiques des ventes entre",
-  //                   style: GoogleFonts.cairo(
-  //                       color: Color(0xff000000),
-  //                       fontWeight: FontWeight.bold,
-  //                       fontSize: 15)),
-  //               Text(
-  //                   "${days[0].day}/${days[0].month}/${days[0].year} et ${days[days.length - 1].day}/${days[days.length - 1].month}/${days[days.length - 1].year}",
-  //                   style: GoogleFonts.cairo(
-  //                       color: Color(0xff000000),
-  //                       fontWeight: FontWeight.bold,
-  //                       fontSize: 15)),
-  //               Padding(
-  //                 padding: const EdgeInsets.all(8.0),
-  //                 child: Row(
-  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                   children: [
-  //                     Container(
-  //                       child: Column(
-  //                         children: [
-  //                           Text(
-  //                             "Vente",
-  //                             style: GoogleFonts.cairo(
-  //                               color: Color(0xff000000),
-  //                               fontWeight: FontWeight.bold,
-  //                             ),
-  //                           ),
-  //                           ClipRRect(
-  //                             borderRadius:
-  //                                 const BorderRadius.all(Radius.circular(20)),
-  //                             child: Container(
-  //                               width: 100,
-  //                               decoration: BoxDecoration(
-  //                                   gradient: LinearGradient(
-  //                                       colors: const [
-  //                                     Color(0xff00B4DB),
-  //                                     Color(0xff0083B0)
-  //                                   ],
-  //                                       begin: Alignment.topLeft,
-  //                                       end: Alignment.bottomRight)),
-  //                               child: Center(
-  //                                 child: Text(
-  //                                   '${periodSalesSum.toStringAsFixed(2)}',
-  //                                   style: GoogleFonts.cairo(
-  //                                     color: Color(0xffffffff),
-  //                                     fontWeight: FontWeight.bold,
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                     Container(
-  //                       child: Column(
-  //                         children: [
-  //                           Text(
-  //                             "Credit",
-  //                             style: GoogleFonts.cairo(
-  //                               color: Color(0xff000000),
-  //                               fontWeight: FontWeight.bold,
-  //                             ),
-  //                           ),
-  //                           ClipRRect(
-  //                             borderRadius:
-  //                                 const BorderRadius.all(Radius.circular(20)),
-  //                             child: Container(
-  //                               width: 100,
-  //                               decoration: BoxDecoration(
-  //                                   gradient: LinearGradient(
-  //                                       colors: const [
-  //                                     Color(0xff00B4DB),
-  //                                     Color(0xff0083B0)
-  //                                   ],
-  //                                       begin: Alignment.topLeft,
-  //                                       end: Alignment.bottomRight)),
-  //                               child: Center(
-  //                                 child: Text(
-  //                                   "${periodCreditsSum.toStringAsFixed(2)}",
-  //                                   style: GoogleFonts.cairo(
-  //                                     color: Color(0xffffffff),
-  //                                     fontWeight: FontWeight.bold,
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                     Container(
-  //                       child: Column(
-  //                         children: [
-  //                           Text(
-  //                             "Retour",
-  //                             style: GoogleFonts.cairo(
-  //                               color: Color(0xff000000),
-  //                               fontWeight: FontWeight.bold,
-  //                             ),
-  //                           ),
-  //                           ClipRRect(
-  //                             borderRadius:
-  //                                 const BorderRadius.all(Radius.circular(20)),
-  //                             child: Container(
-  //                               width: 100,
-  //                               decoration: BoxDecoration(
-  //                                   gradient: LinearGradient(
-  //                                       colors: const [
-  //                                     Color(0xff00B4DB),
-  //                                     Color(0xff0083B0)
-  //                                   ],
-  //                                       begin: Alignment.topLeft,
-  //                                       end: Alignment.bottomRight)),
-  //                               child: Center(
-  //                                 child: Text(
-  //                                   "${periodReturnsSum.toStringAsFixed(2)}",
-  //                                   style: GoogleFonts.cairo(
-  //                                     color: Color(0xffffffff),
-  //                                     fontWeight: FontWeight.bold,
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     )
-  //                   ],
-  //                 ),
-  //               ),
-  //               Expanded(
-  //                 flex: 1,
-  //                 child: ListView.builder(
-  //                     itemCount: days.length,
-  //                     shrinkWrap: true,
-  //                     itemBuilder: (context, index) {
-  //                       return Card(
-  //                         child: Padding(
-  //                           padding: const EdgeInsets.all(8.0),
-  //                           child: Column(
-  //                             crossAxisAlignment: CrossAxisAlignment.start,
-  //                             children: [
-  //                               Row(
-  //                                 mainAxisAlignment:
-  //                                     MainAxisAlignment.spaceBetween,
-  //                                 children: [
-  //                                   Text(
-  //                                       'Le ${days[index].day}/${days[index].month}/${days[index].year}',
-  //                                       style: GoogleFonts.cairo(
-  //                                           color: Color(0xff000000),
-  //                                           fontWeight: FontWeight.bold,
-  //                                           fontSize: 15)),
-  //                                   RaisedButton(
-  //                                     color: Colors.blue,
-  //                                     onPressed: () {
-  //                                       Navigator.push(
-  //                                           context,
-  //                                           MaterialPageRoute(
-  //                                               builder: (context) =>
-  //                                                   salesdetailpagefortheday(
-  //                                                     now: DateTime(
-  //                                                             days[index].year,
-  //                                                             days[index].month,
-  //                                                             days[index].day)
-  //                                                         .toString()
-  //                                                         .substring(0, 10),
-  //                                                   )));
-  //                                     },
-  //                                     child: Text("Details",
-  //                                         style: GoogleFonts.cairo(
-  //                                             color: Color(0xffffffff),
-  //                                             fontWeight: FontWeight.bold,
-  //                                             fontSize: 15)),
-  //                                   )
-  //                                 ],
-  //                               ),
-  //                               Row(
-  //                                 mainAxisAlignment:
-  //                                     MainAxisAlignment.spaceBetween,
-  //                                 children: [
-  //                                   Column(
-  //                                     crossAxisAlignment:
-  //                                         CrossAxisAlignment.start,
-  //                                     children: [
-  //                                       Text(
-  //                                           "Totale vente : ${salesTotals[index]} DHS",
-  //                                           style: GoogleFonts.cairo(
-  //                                               color: Colors.green[900],
-  //                                               fontWeight: FontWeight.bold,
-  //                                               fontSize: 15)),
-  //                                       Text(
-  //                                           "Totale credit : ${creditsTotals[index]} DHS",
-  //                                           style: GoogleFonts.cairo(
-  //                                               color: Colors.red[900],
-  //                                               fontWeight: FontWeight.bold,
-  //                                               fontSize: 15)),
-  //                                       Text(
-  //                                           "Totale retour : ${returnsTotals[index]} DHS",
-  //                                           style: GoogleFonts.cairo(
-  //                                               color: Colors.orange[900],
-  //                                               fontWeight: FontWeight.bold,
-  //                                               fontSize: 15))
-  //                                     ],
-  //                                   ),
-  //                                   Column(
-  //                                     children: [
-  //                                       Text(
-  //                                         "Caisse (espèces)",
-  //                                         style: GoogleFonts.cairo(
-  //                                           color: Color(0xff000000),
-  //                                           fontWeight: FontWeight.bold,
-  //                                         ),
-  //                                       ),
-  //                                       ClipRRect(
-  //                                         borderRadius: const BorderRadius.all(
-  //                                             Radius.circular(20)),
-  //                                         child: Container(
-  //                                           width: 100,
-  //                                           decoration: BoxDecoration(
-  //                                               gradient: LinearGradient(
-  //                                                   colors: const [
-  //                                                 Color(0xff00B4DB),
-  //                                                 Color(0xff0083B0)
-  //                                               ],
-  //                                                   begin: Alignment.topLeft,
-  //                                                   end:
-  //                                                       Alignment.bottomRight)),
-  //                                           child: Center(
-  //                                             child: Text(
-  //                                               num.parse(salesTotals[index]) -
-  //                                                           num.parse(
-  //                                                               creditsTotals[
-  //                                                                   index]) -
-  //                                                           num.parse(
-  //                                                               returnsTotals[
-  //                                                                   index]) <
-  //                                                       0
-  //                                                   ? "0 DH"
-  //                                                   : '${(num.parse(salesTotals[index]) - num.parse(creditsTotals[index]) - num.parse(returnsTotals[index])).toStringAsFixed(2)} DHS',
-  //                                               style: GoogleFonts.cairo(
-  //                                                 color: Color(0xffffffff),
-  //                                                 fontWeight: FontWeight.bold,
-  //                                               ),
-  //                                             ),
-  //                                           ),
-  //                                         ),
-  //                                       ),
-  //                                     ],
-  //                                   ),
-  //                                 ],
-  //                               )
-  //                             ],
-  //                           ),
-  //                         ),
-  //                       );
-  //                     }),
-  //               ),
-  //             ],
-  //           ),
-  //         );
-  //       });
-  // }
+    return showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: Column(
+              children: [
+                Text("Statistiques des ventes entre",
+                    style: GoogleFonts.cairo(
+                        color: Color(0xff000000),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15)),
+                Text(
+                    "${days[0].day}/${days[0].month}/${days[0].year} et ${days[days.length - 1].day}/${days[days.length - 1].month}/${days[days.length - 1].year}",
+                    style: GoogleFonts.cairo(
+                        color: Color(0xff000000),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15)),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Vente",
+                              style: GoogleFonts.cairo(
+                                color: Color(0xff000000),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                              child: Container(
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: const [
+                                      Color(0xff00B4DB),
+                                      Color(0xff0083B0)
+                                    ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight)),
+                                child: Center(
+                                  child: Text(
+                                    '${periodSalesSum.toStringAsFixed(2)}',
+                                    style: GoogleFonts.cairo(
+                                      color: Color(0xffffffff),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Credit",
+                              style: GoogleFonts.cairo(
+                                color: Color(0xff000000),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                              child: Container(
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: const [
+                                      Color(0xff00B4DB),
+                                      Color(0xff0083B0)
+                                    ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight)),
+                                child: Center(
+                                  child: Text(
+                                    "${periodCreditsSum.toStringAsFixed(2)}",
+                                    style: GoogleFonts.cairo(
+                                      color: Color(0xffffffff),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Retour",
+                              style: GoogleFonts.cairo(
+                                color: Color(0xff000000),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                              child: Container(
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: const [
+                                      Color(0xff00B4DB),
+                                      Color(0xff0083B0)
+                                    ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight)),
+                                child: Center(
+                                  child: Text(
+                                    "${periodReturnsSum.toStringAsFixed(2)}",
+                                    style: GoogleFonts.cairo(
+                                      color: Color(0xffffffff),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: ListView.builder(
+                      itemCount: days.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        'Le ${days[index].day}/${days[index].month}/${days[index].year}',
+                                        style: GoogleFonts.cairo(
+                                            color: Color(0xff000000),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15)),
+                                    RaisedButton(
+                                      color: Colors.blue,
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    salesdetailpagefortheday(
+                                                      now: DateTime(
+                                                              days[index].year,
+                                                              days[index].month,
+                                                              days[index].day)
+                                                          .toString()
+                                                          .substring(0, 10),
+                                                    )));
+                                      },
+                                      child: Text("Details",
+                                          style: GoogleFonts.cairo(
+                                              color: Color(0xffffffff),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15)),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            "Totale vente : ${salesTotals[index]} DHS",
+                                            style: GoogleFonts.cairo(
+                                                color: Colors.green[900],
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15)),
+                                        Text(
+                                            "Totale credit : ${creditsTotals[index]} DHS",
+                                            style: GoogleFonts.cairo(
+                                                color: Colors.red[900],
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15)),
+                                        Text(
+                                            "Totale retour : ${returnsTotals[index]} DHS",
+                                            style: GoogleFonts.cairo(
+                                                color: Colors.orange[900],
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15))
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Caisse (espèces)",
+                                          style: GoogleFonts.cairo(
+                                            color: Color(0xff000000),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(20)),
+                                          child: Container(
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                    colors: const [
+                                                  Color(0xff00B4DB),
+                                                  Color(0xff0083B0)
+                                                ],
+                                                    begin: Alignment.topLeft,
+                                                    end:
+                                                        Alignment.bottomRight)),
+                                            child: Center(
+                                              child: Text(
+                                                num.parse(salesTotals[index]) -
+                                                            num.parse(
+                                                                creditsTotals[
+                                                                    index]) -
+                                                            num.parse(
+                                                                returnsTotals[
+                                                                    index]) <
+                                                        0
+                                                    ? "0 DH"
+                                                    : '${(num.parse(salesTotals[index]) - num.parse(creditsTotals[index]) - num.parse(returnsTotals[index])).toStringAsFixed(2)} DHS',
+                                                style: GoogleFonts.cairo(
+                                                  color: Color(0xffffffff),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ],
+            ),
+          );
+        });
+  }
 
   final commandNumberController = TextEditingController();
   Widget? saleDetails(String num) {
@@ -796,21 +795,11 @@ class _salesPageState extends State<salesPage> {
                                   );
                                 });
                           }),
-                      FlatButton(
-                        minWidth: 20,
-                          onPressed: () {
+                          IconButton(onPressed: (){
                             updateDates(
                                 DateTime.parse(startDate!.substring(33, 43)),
                                 DateTime.parse(endDate!.substring(10, 20)));
-                            // dateView();
-                            
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    daysAnaliticsPage(day1: DateTime.parse(startDate!.substring(33, 43)),day2: DateTime.parse(endDate!.substring(10, 20)))));
-                          },
-                          child: Icon(Icons.search)),
+                            dateView();}, icon: Icon(Icons.search))
                     ],
                   ),
                   SizedBox(
