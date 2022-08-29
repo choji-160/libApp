@@ -515,11 +515,17 @@ class _salesPageState extends State<salesPage> {
             context: context,
             barrierDismissible: true,
             builder: (BuildContext buildContext) => AlertDialog(
-              actions: [FlatButton(onPressed: (){Navigator.pop(context);}, child: Text("annuler",
-                      style: GoogleFonts.cairo(
-                          color: Color(0xffffffff),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20)))],
+                  actions: [
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("annuler",
+                            style: GoogleFonts.cairo(
+                                color: Color(0xffffffff),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20)))
+                  ],
                   content: Text("vérifier le numéro de commande",
                       style: GoogleFonts.cairo(
                           color: Color(0xffffffff),
@@ -789,16 +795,15 @@ class _salesPageState extends State<salesPage> {
                                   );
                                 });
                           }),
-                      IconButton(
-                          icon: Icon(Icons.search),
+                      FlatButton(
+                        minWidth: 20,
                           onPressed: () {
-                            // print(DateTime.parse(startDate!.substring(33, 43)));
-                            // print(DateTime.parse(endDate!.substring(10, 20)));
                             updateDates(
                                 DateTime.parse(startDate!.substring(33, 43)),
                                 DateTime.parse(endDate!.substring(10, 20)));
                             dateView();
-                          }),
+                          },
+                          child: Icon(Icons.search)),
                     ],
                   ),
                   SizedBox(
