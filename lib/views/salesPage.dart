@@ -239,7 +239,7 @@ class _salesPageState extends State<salesPage> {
         context: context,
         builder: (BuildContext bc) {
           return Container(
-            height: 650,
+            height: MediaQuery.of(context).size.height * 0.8,
             child: Column(
               children: [
                 Text("Statistiques des ventes entre",
