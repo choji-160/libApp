@@ -72,6 +72,7 @@ class _HomePageState extends State<HomePage> {
     salesToday = sales
         ?.where((element) => element.dateVent == '${now}T00:00:00.000Z')
         .toList();
+    salessum = 0;
     for (int e = 0; e < salesToday!.length; e++) {
       salessum += salesToday![e].totale!;
     }
@@ -115,6 +116,7 @@ class _HomePageState extends State<HomePage> {
     creditsToday = credits
         ?.where((element) => element.date == '${now}T00:00:00.000Z')
         .toList();
+    creditssum = 0;
     for (int e = 0; e < creditsToday!.length; e++) {
       creditssum += creditsToday![e].total!;
     }
@@ -131,6 +133,7 @@ class _HomePageState extends State<HomePage> {
     returnsToday = returns
         ?.where((element) => element.dateRetour == '${now}T00:00:00.000Z')
         .toList();
+    returnssum = 0;
     for (int e = 0; e < returnsToday!.length; e++) {
       returnssum += returnsToday![e].total!;
     }
@@ -982,8 +985,21 @@ class _HomePageState extends State<HomePage> {
             IconButton(
                 onPressed: () {
                   setState(() {
-                    homePageData();
+                    isLoaded = false;
                   });
+                  setState(() {
+                    getSale();
+                    getSoldArticle();
+                    getArticle();
+                    getClient();
+                    getCredit();
+                    getRegistryTotal();
+                    getReturns();
+                    getReturnedAtricles();
+                  });
+                  if (isLoaded == false) {
+                    CircularProgressIndicator();
+                  }
                 },
                 icon: Icon(Icons.refresh))
           ],
