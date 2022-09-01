@@ -997,9 +997,13 @@ class _HomePageState extends State<HomePage> {
                     getReturns();
                     getReturnedAtricles();
                   });
-                  if (isLoaded == false) {
-                    CircularProgressIndicator();
-                  }
+                  Visibility(
+                    child: homePageData(),
+                    visible: isLoaded,
+                    replacement: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
                 },
                 icon: Icon(Icons.refresh))
           ],
