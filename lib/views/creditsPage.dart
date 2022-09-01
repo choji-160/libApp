@@ -177,13 +177,13 @@ class _creditsPageState extends State<creditsPage> {
   }
 
   final commandNumberController = TextEditingController();
-  Widget? saleDetails(String num) {
+  Widget? creditDetail(String num) {
     getSoldArticlesNum(num);
     List<Sale> commandeSale =
-        sales!.where(((element) => element.numeroCommande == num)).toList();
+        sales!.where(((saleNum) => saleNum.numeroCommande == num)).toList();
     List<Credit> commandeCredit =
-        credits!.where((element) => element.numeroCommande == num).toList();
-    commandeCredit.length == 0 && soldarticlesNum!.length == 0
+        credits!.where((creditNum) => creditNum.numeroCommande == num).toList();
+    commandeCredit.length == 0
         ? showDialog(
             context: context,
             barrierDismissible: true,
@@ -240,6 +240,31 @@ class _creditsPageState extends State<creditsPage> {
                                   color: Color(0xff000000),
                                   fontWeight: FontWeight.bold,
                                 ),
+                              ),
+                              SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                      "Totale : ${commandeCredit[0].total!.toStringAsFixed(2)}",
+                                      style: GoogleFonts.cairo(
+                                        color: Color(0xff000000),
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  Text(
+                                      "Avance : ${commandeCredit[0].avance!.toStringAsFixed(2)}",
+                                      style: GoogleFonts.cairo(
+                                        color: Color(0xff000000),
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  Text(
+                                      "Reste :${commandeCredit[0].rest!.toStringAsFixed(2)}",
+                                      style: GoogleFonts.cairo(
+                                        color: Color(0xff000000),
+                                        fontWeight: FontWeight.bold,
+                                      ))
+                                ],
                               ),
                               SizedBox(height: 5),
                               Column(
@@ -306,18 +331,6 @@ class _creditsPageState extends State<creditsPage> {
                                       )
                                     ],
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(
-                                          "Totale : ${commandeCredit[0].total!.toStringAsFixed(2)}"),
-                                      Text(
-                                          "Avance : ${commandeCredit[0].avance!.toStringAsFixed(2)}"),
-                                      Text(
-                                          "Reste :${commandeCredit[0].rest!.toStringAsFixed(2)}")
-                                    ],
-                                  )
                                 ],
                               ),
                             ],
@@ -580,185 +593,67 @@ class _creditsPageState extends State<creditsPage> {
                                                 0.8,
                                         child: Column(
                                           children: [
-                                            Text(
-                                                "Statistiques des ventes entre",
-                                                style: GoogleFonts.cairo(
-                                                    color: Color(0xff000000),
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15)),
-                                            Text(
-                                                "${days[0].day}/${days[0].month}/${days[0].year} et ${days[days.length - 1].day}/${days[days.length - 1].month}/${days[days.length - 1].year}",
-                                                style: GoogleFonts.cairo(
-                                                    color: Color(0xff000000),
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15)),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
-                                                        .spaceBetween,
+                                                        .spaceAround,
                                                 children: [
-                                                  Container(
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          "Vente",
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                          "Totale des credits entre ${days[0].day}/${days[0].month}/${days[0].year} et ${days[days.length - 1].day}/${days[days.length - 1].month}/${days[days.length - 1].year}",
                                                           style:
                                                               GoogleFonts.cairo(
-                                                            color: Color(
-                                                                0xff000000),
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        ClipRRect(
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                      .all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          20)),
-                                                          child: Container(
-                                                            width: 100,
-                                                            decoration: BoxDecoration(
-                                                                gradient: LinearGradient(
-                                                                    colors: const [
-                                                                  Color(
-                                                                      0xff00B4DB),
-                                                                  Color(
-                                                                      0xff0083B0)
-                                                                ],
-                                                                    begin: Alignment
-                                                                        .topLeft,
-                                                                    end: Alignment
-                                                                        .bottomRight)),
-                                                            child: Center(
-                                                              child: Text(
-                                                                '${periodSalesSum.toStringAsFixed(2)}',
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .cairo(
                                                                   color: Color(
-                                                                      0xffffffff),
+                                                                      0xff000000),
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
-                                                                ),
+                                                                  fontSize:
+                                                                      15)),
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                    .all(
+                                                                Radius.circular(
+                                                                    20)),
+                                                        child: Container(
+                                                          width: 100,
+                                                          decoration: BoxDecoration(
+                                                              gradient: LinearGradient(
+                                                                  colors: const [
+                                                                Color(
+                                                                    0xff00B4DB),
+                                                                Color(
+                                                                    0xff0083B0)
+                                                              ],
+                                                                  begin: Alignment
+                                                                      .topLeft,
+                                                                  end: Alignment
+                                                                      .bottomRight)),
+                                                          child: Center(
+                                                            child: Text(
+                                                              "${periodCreditsSum.toStringAsFixed(2)}",
+                                                              style: GoogleFonts
+                                                                  .cairo(
+                                                                color: Color(
+                                                                    0xffffffff),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
                                                               ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  Container(
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          "Credit",
-                                                          style:
-                                                              GoogleFonts.cairo(
-                                                            color: Color(
-                                                                0xff000000),
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        ClipRRect(
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                      .all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          20)),
-                                                          child: Container(
-                                                            width: 100,
-                                                            decoration: BoxDecoration(
-                                                                gradient: LinearGradient(
-                                                                    colors: const [
-                                                                  Color(
-                                                                      0xff00B4DB),
-                                                                  Color(
-                                                                      0xff0083B0)
-                                                                ],
-                                                                    begin: Alignment
-                                                                        .topLeft,
-                                                                    end: Alignment
-                                                                        .bottomRight)),
-                                                            child: Center(
-                                                              child: Text(
-                                                                "${periodCreditsSum.toStringAsFixed(2)}",
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .cairo(
-                                                                  color: Color(
-                                                                      0xffffffff),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          "Retour",
-                                                          style:
-                                                              GoogleFonts.cairo(
-                                                            color: Color(
-                                                                0xff000000),
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        ClipRRect(
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                      .all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          20)),
-                                                          child: Container(
-                                                            width: 100,
-                                                            decoration: BoxDecoration(
-                                                                gradient: LinearGradient(
-                                                                    colors: const [
-                                                                  Color(
-                                                                      0xff00B4DB),
-                                                                  Color(
-                                                                      0xff0083B0)
-                                                                ],
-                                                                    begin: Alignment
-                                                                        .topLeft,
-                                                                    end: Alignment
-                                                                        .bottomRight)),
-                                                            child: Center(
-                                                              child: Text(
-                                                                "${periodReturnsSum.toStringAsFixed(2)}",
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .cairo(
-                                                                  color: Color(
-                                                                      0xffffffff),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
                                                 ],
                                               ),
                                             ),
@@ -948,7 +843,7 @@ class _creditsPageState extends State<creditsPage> {
                                         color: Colors.black,
                                       ),
                                       onPressed: () {
-                                        saleDetails(
+                                        creditDetail(
                                             commandNumberController.text);
                                       })),
                             ),
