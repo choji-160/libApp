@@ -72,6 +72,7 @@ class _HomePageState extends State<HomePage> {
     salesToday = sales
         ?.where((element) => element.dateVent == '${now}T00:00:00.000Z')
         .toList();
+    salessum = 0;
     for (int e = 0; e < salesToday!.length; e++) {
       salessum += salesToday![e].totale!;
     }
@@ -115,6 +116,7 @@ class _HomePageState extends State<HomePage> {
     creditsToday = credits
         ?.where((element) => element.date == '${now}T00:00:00.000Z')
         .toList();
+    creditssum = 0;
     for (int e = 0; e < creditsToday!.length; e++) {
       creditssum += creditsToday![e].total!;
     }
@@ -131,6 +133,7 @@ class _HomePageState extends State<HomePage> {
     returnsToday = returns
         ?.where((element) => element.dateRetour == '${now}T00:00:00.000Z')
         .toList();
+    returnssum = 0;
     for (int e = 0; e < returnsToday!.length; e++) {
       returnssum += returnsToday![e].total!;
     }
@@ -619,7 +622,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   Text(
-                                    "Utilisateur : ${returnsToday![index].utilisateur.toString()}",
+                                    "Utilisateur : ${returnsToday![index].utilisateur.toString().substring(0, 2)}",
                                     style: GoogleFonts.cairo(
                                       color: Color(0xff000000),
                                       fontWeight: FontWeight.bold,
@@ -983,9 +986,8 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   setState(() {
                     isLoaded = false;
-                    salessum = 0;
-                    creditssum = 0;
-                    returnssum = 0;
+                  });
+                  setState(() {
                     getSale();
                     getSoldArticle();
                     getArticle();
