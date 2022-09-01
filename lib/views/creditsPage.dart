@@ -451,6 +451,294 @@ class _creditsPageState extends State<creditsPage> {
       periodCreditsSum = periodCreditsSum + num.parse(creditsTotals[e]);
     }
 
+    List<Credit>? creditsForTheDay;
+
+    creditsFor(DateTime day) {
+      creditsForTheDay = credits
+          ?.where((element) =>
+              element.date ==
+              '${day.toString().substring(0, 10)}T00:00:00.000Z')
+          .toList();
+      return creditsForTheDay;
+    }
+
+    Widget? saleDetails(String num) {
+      getSoldArticlesNum(num);
+      showModalBottomSheet(
+          backgroundColor: Color(0xfff4a261),
+          isScrollControlled: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+          ),
+          context: context,
+          builder: (BuildContext buildcontext) {
+            return Container(
+              height: 600,
+              child: Column(
+                children: [
+                  Icon(Icons.drag_handle_sharp,color: Colors.white,size: 30,),
+                  Expanded(
+                    flex: 1,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15)),
+                      child: Container(
+                        color: Color(0xff05668d),
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: soldarticlesNum?.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                child: Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Designation : ${soldarticlesNum![index].designation}",
+                                          style: GoogleFonts.cairo(
+                                            color: Color(0xff000000),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          "Quantité : ${soldarticlesNum![index].quantite}",
+                                          style: GoogleFonts.cairo(
+                                            color: Color(0xff000000),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Prix : ${soldarticlesNum![index].prix}",
+                                              style: GoogleFonts.cairo(
+                                                color: Color(0xff000000),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Remise : ${soldarticlesNum![index].remise}",
+                                              style: GoogleFonts.cairo(
+                                                color: Color(0xff000000),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Totale : ${soldarticlesNum![index].total}",
+                                              style: GoogleFonts.cairo(
+                                                color: Color(0xff000000),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              "TVA : ${soldarticlesNum![index].tva}",
+                                              style: GoogleFonts.cairo(
+                                                color: Color(0xff000000),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          });
+    }
+
+    Widget? dayDetails() {
+      return Expanded(
+        flex: 1,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              for (var day in days)
+                creditsFor(day)!.isEmpty == true
+                    ? Container(
+                        height: 0,
+                        width: 0,
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ClipRRect(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          child: Container(
+                              color: Color(0xff219ebc),
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                            "Le ${day.toString().substring(0, 10)}",
+                                            style: GoogleFonts.cairo(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15)),
+                                        Text(
+                                            "Le totale des credit est ${creditsForTheDay!.length}",
+                                            style: GoogleFonts.cairo(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15)),
+                                      ],
+                                    ),
+                                    for (var creditToday in creditsForTheDay!)
+                                      Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(15)),
+                                            child: Container(
+                                              color: Color(0xff023047),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceAround,
+                                                        children: [
+                                                          Text(
+                                                              creditToday.total ==
+                                                                      null
+                                                                  ? "Totale : 0"
+                                                                  : "Totale ${creditToday.total!.toStringAsFixed(2)}",
+                                                              style: GoogleFonts.cairo(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      15)),
+                                                          Text(
+                                                              creditToday.avance ==
+                                                                      null
+                                                                  ? "Avance : 0"
+                                                                  : "Avance ${creditToday.avance!.toStringAsFixed(2)}",
+                                                              style: GoogleFonts.cairo(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      15)),
+                                                          Text(
+                                                              creditToday.rest ==
+                                                                      null
+                                                                  ? "Reste : 0"
+                                                                  : "Reste ${creditToday.rest!.toStringAsFixed(2)}",
+                                                              style: GoogleFonts.cairo(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      15)),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                  "Client : ${creditToday.client}",
+                                                                  style: GoogleFonts.cairo(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          15)),
+                                                              SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              Text(
+                                                                  "N.Commande : ${creditToday.numeroCommande}",
+                                                                  style: GoogleFonts.cairo(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          15))
+                                                            ],
+                                                          ),
+                                                          RaisedButton(
+                                                              color: Color(
+                                                                  0xff6b9080),
+                                                              child: Text(
+                                                                  "Details",
+                                                                  style: GoogleFonts.cairo(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          15)),
+                                                              onPressed: () {
+                                                                saleDetails(
+                                                                    creditToday
+                                                                        .numeroCommande!);
+                                                              })
+                                                        ],
+                                                      ),
+                                                    ]),
+                                              ),
+                                            ),
+                                          ))
+                                  ],
+                                ),
+                              )),
+                        ),
+                      )
+            ],
+          ),
+        ),
+      );
+    }
+
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.only(
@@ -506,36 +794,7 @@ class _creditsPageState extends State<creditsPage> {
                     ],
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: ListView.builder(
-                      itemCount: days.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                        'Le ${days[index].day}/${days[index].month}/${days[index].year}',
-                                        style: GoogleFonts.cairo(
-                                            color: Color(0xff000000),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                ),
+                dayDetails()!
               ],
             ),
           );
