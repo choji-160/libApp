@@ -763,8 +763,8 @@ class _salesPageState extends State<salesPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       RaisedButton(
                           color: Colors.blue,
@@ -797,11 +797,16 @@ class _salesPageState extends State<salesPage> {
                                   );
                                 });
                           }),
-                      IconButton(
+                      RaisedButton(
+                          color: Colors.blue,
                           onPressed: () {
                             getStatisticsPerDay();
                           },
-                          icon: Icon(Icons.search))
+                          child: Text("Consulter",
+                              style: GoogleFonts.cairo(
+                                  color: Color(0xffffffff),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15)))
                     ],
                   ),
                   SizedBox(

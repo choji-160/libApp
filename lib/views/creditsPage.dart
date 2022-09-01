@@ -430,27 +430,11 @@ class _creditsPageState extends State<creditsPage> {
   getCreditPerDay() {
     updateDates(DateTime.parse(startDate!.substring(33, 43)),
         DateTime.parse(endDate!.substring(10, 20)));
-    List salesTotals = [];
     List creditsTotals = [];
-    List returnsTotals = [];
-    num periodSalesSum = 0;
     num periodCreditsSum = 0;
-    num periodReturnsSum = 0;
-    salesTotals.clear();
     creditsTotals.clear();
-    returnsTotals.clear();
     for (var day in days) {
-      salessum = 0;
       creditssum = 0;
-      returnssum = 0;
-      salesToday = sales
-          ?.where((element) =>
-              element.dateVent ==
-              '${day.toString().substring(0, 10)}T00:00:00.000Z')
-          .toList();
-      for (int e = 0; e < salesToday!.length; e++) {
-        salessum = salessum! + salesToday![e].totale!;
-      }
       creditsToday = credits
           ?.where((element) =>
               element.date ==
@@ -460,27 +444,11 @@ class _creditsPageState extends State<creditsPage> {
         creditssum = creditssum! +
             (creditsToday![e].total == null ? 0 : creditsToday![e].total!);
       }
-      returnsToday = returns
-          ?.where((element) =>
-              element.dateRetour ==
-              '${day.toString().substring(0, 10)}T00:00:00.000Z')
-          .toList();
-      for (int e = 0; e < returnsToday!.length; e++) {
-        returnssum = returnssum! + returnsToday![e].total!;
-      }
-      salesTotals.add(salessum!.toStringAsFixed(2));
       creditsTotals.add(creditssum!.toStringAsFixed(2));
-      returnsTotals.add(returnssum!.toStringAsFixed(2));
     }
 
-    for (int e = 0; e < salesTotals.length; e++) {
-      periodSalesSum = periodSalesSum + num.parse(salesTotals[e]);
-    }
     for (int e = 0; e < creditsTotals.length; e++) {
       periodCreditsSum = periodCreditsSum + num.parse(creditsTotals[e]);
-    }
-    for (int e = 0; e < returnsTotals.length; e++) {
-      periodReturnsSum = periodReturnsSum + num.parse(returnsTotals[e]);
     }
 
     showModalBottomSheet(
@@ -560,105 +528,8 @@ class _creditsPageState extends State<creditsPage> {
                                             color: Color(0xff000000),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15)),
-                                    RaisedButton(
-                                      color: Colors.blue,
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    salesdetailpagefortheday(
-                                                      now: DateTime(
-                                                              days[index].year,
-                                                              days[index].month,
-                                                              days[index].day)
-                                                          .toString()
-                                                          .substring(0, 10),
-                                                    )));
-                                      },
-                                      child: Text("Details",
-                                          style: GoogleFonts.cairo(
-                                              color: Color(0xffffffff),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15)),
-                                    )
                                   ],
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            "Totale vente : ${salesTotals[index]} DHS",
-                                            style: GoogleFonts.cairo(
-                                                color: Colors.green[900],
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15)),
-                                        Text(
-                                            "Totale credit : ${creditsTotals[index]} DHS",
-                                            style: GoogleFonts.cairo(
-                                                color: Colors.red[900],
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15)),
-                                        Text(
-                                            "Totale retour : ${returnsTotals[index]} DHS",
-                                            style: GoogleFonts.cairo(
-                                                color: Colors.orange[900],
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15))
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "Caisse (espèces)",
-                                          style: GoogleFonts.cairo(
-                                            color: Color(0xff000000),
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(20)),
-                                          child: Container(
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: const [
-                                                  Color(0xff00B4DB),
-                                                  Color(0xff0083B0)
-                                                ],
-                                                    begin: Alignment.topLeft,
-                                                    end:
-                                                        Alignment.bottomRight)),
-                                            child: Center(
-                                              child: Text(
-                                                num.parse(salesTotals[index]) -
-                                                            num.parse(
-                                                                creditsTotals[
-                                                                    index]) -
-                                                            num.parse(
-                                                                returnsTotals[
-                                                                    index]) <
-                                                        0
-                                                    ? "0 DH"
-                                                    : '${(num.parse(salesTotals[index]) - num.parse(creditsTotals[index]) - num.parse(returnsTotals[index])).toStringAsFixed(2)} DHS',
-                                                style: GoogleFonts.cairo(
-                                                  color: Color(0xffffffff),
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )
                               ],
                             ),
                           ),
@@ -714,8 +585,8 @@ class _creditsPageState extends State<creditsPage> {
                       SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           RaisedButton(
                               color: Colors.blue,
@@ -750,11 +621,16 @@ class _creditsPageState extends State<creditsPage> {
                                       );
                                     });
                               }),
-                          IconButton(
+                          RaisedButton(
+                              color: Colors.blue,
                               onPressed: () {
                                 getCreditPerDay();
                               },
-                              icon: Icon(Icons.search))
+                              child: Text("Consulter",
+                                  style: GoogleFonts.cairo(
+                                      color: Color(0xffffffff),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15)))
                         ],
                       ),
                       SizedBox(
