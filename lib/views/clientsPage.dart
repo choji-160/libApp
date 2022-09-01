@@ -20,6 +20,7 @@ import '../services/Credits.dart';
 import '../services/SoldArticles.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kt_dart/kt.dart';
 
 class clientsPage extends StatefulWidget {
   const clientsPage({Key? key}) : super(key: key);
@@ -182,10 +183,9 @@ class _clientsPageState extends State<clientsPage> {
                       fontSize: 25),
                 ),
                 onPressed: () {
-                  List<Client> clientsName = clients!.toSet().toList();
-                  for (var client in clients!.map((e) => e.nom).toSet().toList()) {
-                    print(client!.length);
-                  }
+                  var records = mutableListFrom(clients!);
+                  var distinct = records.distinctBy((it) => it.nom).toList();
+                  print(distinct);
                 },
               )),
             )));
