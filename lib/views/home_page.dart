@@ -552,7 +552,7 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (BuildContext buildcontext) {
           return Container(
-            height: 600,
+            height: MediaQuery.of(context).size.height * 0.8,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: ListView.builder(
@@ -622,7 +622,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   Text(
-                                    "Utilisateur : ${returnsToday![index].utilisateur.toString().substring(0, 2)}",
+                                    "Utilisateur : ${returnsToday![index].utilisateur.toString()}",
                                     style: GoogleFonts.cairo(
                                       color: Color(0xff000000),
                                       fontWeight: FontWeight.bold,

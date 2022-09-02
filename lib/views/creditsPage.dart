@@ -1,5 +1,5 @@
-// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables
-import 'package:librairiedumaroc/views/salesdetailpagefortheday.dart';
+// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names
+import 'package:flutter/rendering.dart';
 import 'package:librairiedumaroc/views/togglebar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +49,7 @@ class _creditsPageState extends State<creditsPage> {
   List<String> searchWith = ["Date et N.Commande", "Nom Client"];
   int counter = 0;
   var isLoaded = false;
+  List creditedClients = [];
 
   @override
   void initState() {
@@ -102,6 +103,20 @@ class _creditsPageState extends State<creditsPage> {
 
   getCredit() async {
     credits = await Credits().getCredits();
+    for (var client in credits!) {
+      bool exists = false;
+      for (var creditedClient in creditedClients) {
+        if (client.client == creditedClient) {
+          exists = true;
+        }
+      }
+      if (!exists) {
+        creditedClients.add(client.client);
+      }
+    }
+    for (var creditedClient in creditedClients) {
+      print(creditedClient);
+    }
     if (articles != null) {
       setState(() {
         isLoaded = true;
@@ -180,6 +195,7 @@ class _creditsPageState extends State<creditsPage> {
   }
 
   final commandNumberController = TextEditingController();
+  final clientNameController = TextEditingController();
   Widget? creditDetail(String num) {
     getSoldArticlesNum(num);
     List<Sale> commandeSale =
@@ -834,8 +850,7 @@ class _creditsPageState extends State<creditsPage> {
             child: CircularProgressIndicator(),
           ),
           child: Center(
-            child: SingleChildScrollView(
-              child: Visibility(
+            child: Visibility(
                 visible: isLoaded,
                 replacement: const Center(
                   child: CircularProgressIndicator(),
@@ -852,118 +867,166 @@ class _creditsPageState extends State<creditsPage> {
                           });
                           print(searchWith[counter]);
                         }),
-                    searchWith[counter] == "Date et N.Commande" ? Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Text(
-                                "Veuillez choisir la période que vous souhaitez vérifier.",
-                                style: GoogleFonts.cairo(
-                                    color: Color(0xff000000),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15)),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    searchWith[counter] == "Date et N.Commande"
+                        ? Column(
                             children: [
-                              RaisedButton(
-                                  color: Colors.blue,
-                                  child: Text(
-                                      "cliquez pour choisir la période à vérifier",
-                                      style: GoogleFonts.cairo(
-                                          color: Color(0xffffffff),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15)),
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext buildcontext) {
-                                          return Container(
-                                            height: 600,
-                                            child: SfDateRangePicker(
-                                              view: DateRangePickerView.month,
-                                              monthViewSettings:
-                                                  DateRangePickerMonthViewSettings(
-                                                      firstDayOfWeek: 1),
-                                              selectionMode:
-                                                  DateRangePickerSelectionMode
-                                                      .range,
-                                              minDate: DateTime(2021, 10, 30),
-                                              maxDate: DateTime(
-                                                  DateTime.now().year,
-                                                  DateTime.now().month,
-                                                  DateTime.now().day),
-                                              onSelectionChanged:
-                                                  _onSelectedChanged,
-                                            ),
-                                          );
-                                        });
-                                  }),
-                              RaisedButton(
-                                  color: Colors.blue,
-                                  onPressed: () {
-                                    getCreditPerDay();
-                                  },
-                                  child: Text("Consulter",
-                                      style: GoogleFonts.cairo(
-                                          color: Color(0xffffffff),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15)))
-                            ],
-                          ),
-                          SizedBox(
-                            height: 200,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Container(
-                              child: Text(
-                                  "veuillez saisir le numéro de la commande que vous souhaitez vérifier",
-                                  style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15)),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: TextField(
-                                  controller: commandNumberController,
-                                  scrollPadding: EdgeInsets.only(bottom: 40),
-                                  decoration: InputDecoration(
-                                      labelText: "Numero de commande",
-                                      hintText: "Entrez le numero de commande",
-                                      prefixIcon: Icon(Icons.warehouse),
-                                      suffix: IconButton(
-                                          icon: Icon(
-                                            Icons.search,
-                                            color: Colors.black,
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                          "Veuillez choisir la période que vous souhaitez vérifier.",
+                                          style: GoogleFonts.cairo(
+                                              color: Color(0xff000000),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15)),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        RaisedButton(
+                                            color: Colors.blue,
+                                            child: Text(
+                                                "cliquez pour choisir la période à vérifier",
+                                                style: GoogleFonts.cairo(
+                                                    color: Color(0xffffffff),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15)),
+                                            onPressed: () {
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  builder: (BuildContext
+                                                      buildcontext) {
+                                                    return Container(
+                                                      height: 600,
+                                                      child: SfDateRangePicker(
+                                                        view:
+                                                            DateRangePickerView
+                                                                .month,
+                                                        monthViewSettings:
+                                                            DateRangePickerMonthViewSettings(
+                                                                firstDayOfWeek:
+                                                                    1),
+                                                        selectionMode:
+                                                            DateRangePickerSelectionMode
+                                                                .range,
+                                                        minDate: DateTime(
+                                                            2021, 10, 30),
+                                                        maxDate: DateTime(
+                                                            DateTime.now().year,
+                                                            DateTime.now()
+                                                                .month,
+                                                            DateTime.now().day),
+                                                        onSelectionChanged:
+                                                            _onSelectedChanged,
+                                                      ),
+                                                    );
+                                                  });
+                                            }),
+                                        RaisedButton(
+                                            color: Colors.blue,
+                                            onPressed: () {
+                                              getCreditPerDay();
+                                            },
+                                            child: Text("Consulter",
+                                                style: GoogleFonts.cairo(
+                                                    color: Color(0xffffffff),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15)))
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 150,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8),
+                                      child: Container(
+                                        child: Text(
+                                            "veuillez saisir le numéro de la commande que vous souhaitez vérifier",
+                                            style: GoogleFonts.cairo(
+                                                color: Color(0xff000000),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15)),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: TextField(
+                                            controller: commandNumberController,
+                                            scrollPadding:
+                                                EdgeInsets.only(bottom: 40),
+                                            decoration: InputDecoration(
+                                                labelText: "Numero de commande",
+                                                hintText:
+                                                    "Entrez le numero de commande",
+                                                prefixIcon:
+                                                    Icon(Icons.warehouse),
+                                                suffix: IconButton(
+                                                    icon: Icon(
+                                                      Icons.search,
+                                                      color: Colors.black,
+                                                    ),
+                                                    onPressed: () {
+                                                      creditDetail(
+                                                          commandNumberController
+                                                              .text);
+                                                    })),
                                           ),
-                                          onPressed: () {
-                                            creditDetail(
-                                                commandNumberController.text);
-                                          })),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ),
+                              )
                             ],
-                          ),
-                        ],
-                      ),
-                    )
-                    : Text("lol this is easy")
+                          )
+                        : Expanded(
+                            flex: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.all(16),
+                                    child: TextField(
+                                        controller: clientNameController,
+                                        decoration: InputDecoration(
+                                            prefixIcon: Icon(Icons.person),
+                                            hintText: "Nom du client",
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                borderSide: BorderSide(
+                                                    color: Colors.blue))))),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    child: ListView.builder(
+                                        itemCount: creditedClients.length,
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                              child: Text(
+                                                  "${creditedClients[index]}"));
+                                        }),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
                   ],
-                ),
-              ),
-            ),
+                )),
           ),
         ));
   }
