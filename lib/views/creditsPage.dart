@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names
+// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names, prefer_typing_uninitialized_variables
 import 'package:flutter/rendering.dart';
 import 'package:librairiedumaroc/views/togglebar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -50,6 +50,7 @@ class _creditsPageState extends State<creditsPage> {
   int counter = 0;
   var isLoaded = false;
   List creditedClients = [];
+  List results = [];
 
   @override
   void initState() {
@@ -114,8 +115,17 @@ class _creditsPageState extends State<creditsPage> {
         creditedClients.add(client.client);
       }
     }
-    for (var creditedClient in creditedClients) {
-      print(creditedClient);
+
+    for (var client in credits!) {
+      bool exists = false;
+      for (var result in results) {
+        if (client.client == result) {
+          exists = true;
+        }
+      }
+      if (!exists) {
+        results.add(client.client);
+      }
     }
     if (articles != null) {
       setState(() {
@@ -828,6 +838,93 @@ class _creditsPageState extends State<creditsPage> {
         });
   }
 
+  Widget creditedClientsList() {
+    Widget totalsAccordingToClient(String name) {
+      num totalSum = 0;
+      num avanceSum = 0;
+      num restSum = 0;
+      List<Credit> creditedClient =
+          credits!.where((element) => element.client == name).toList();
+      for (var num in creditedClient) {
+        num.total == null ? totalSum += 0 : totalSum += num.total!;
+        num.avance == null ? avanceSum += 0 : avanceSum += num.avance!;
+        num.rest == null ? restSum += 0 : restSum += num.rest!;
+      }
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("Total : ${totalSum.toStringAsFixed(2)} ",
+              style: GoogleFonts.cairo(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15)),
+          Text("Avance : ${avanceSum.toStringAsFixed(2)} ",
+              style: GoogleFonts.cairo(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15)),
+          Text("Rest : ${restSum.toStringAsFixed(2)}",
+              style: GoogleFonts.cairo(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15))
+        ],
+      );
+    }
+
+    return Expanded(
+      flex: 1,
+      child: Container(
+          child: ListView.builder(
+              itemCount: creditedClients.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: Container(
+                        color: Color(0xff2f3e46),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Client : ${creditedClients[index]}",
+                                  style: GoogleFonts.cairo(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15)),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              totalsAccordingToClient(creditedClients[index])
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              })),
+    );
+  }
+
+  void searchClient(String value) {
+    setState(() {
+      creditedClients = results;
+    });
+    print(results);
+    print(value);
+    final suggestions = creditedClients.where((element) {
+      final clientName = element.toString().toLowerCase();
+      final input = value.toLowerCase();
+      return clientName.contains(input);
+    }).toList();
+    setState(() => creditedClients = suggestions);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -868,128 +965,133 @@ class _creditsPageState extends State<creditsPage> {
                           print(searchWith[counter]);
                         }),
                     searchWith[counter] == "Date et N.Commande"
-                        ? Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                          "Veuillez choisir la période que vous souhaitez vérifier.",
-                                          style: GoogleFonts.cairo(
-                                              color: Color(0xff000000),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15)),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                        ? Expanded(
+                          flex: 1,
+                          child: SingleChildScrollView(
+                            child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
                                       children: [
-                                        RaisedButton(
-                                            color: Colors.blue,
+                                        Center(
+                                          child: Text(
+                                              "Veuillez choisir la période que vous souhaitez vérifier.",
+                                              style: GoogleFonts.cairo(
+                                                  color: Color(0xff000000),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15)),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            RaisedButton(
+                                                color: Colors.blue,
+                                                child: Text(
+                                                    "cliquez pour choisir la période à vérifier",
+                                                    style: GoogleFonts.cairo(
+                                                        color: Color(0xffffffff),
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 15)),
+                                                onPressed: () {
+                                                  showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          buildcontext) {
+                                                        return Container(
+                                                          height: 600,
+                                                          child: SfDateRangePicker(
+                                                            view:
+                                                                DateRangePickerView
+                                                                    .month,
+                                                            monthViewSettings:
+                                                                DateRangePickerMonthViewSettings(
+                                                                    firstDayOfWeek:
+                                                                        1),
+                                                            selectionMode:
+                                                                DateRangePickerSelectionMode
+                                                                    .range,
+                                                            minDate: DateTime(
+                                                                2021, 10, 30),
+                                                            maxDate: DateTime(
+                                                                DateTime.now().year,
+                                                                DateTime.now()
+                                                                    .month,
+                                                                DateTime.now().day),
+                                                            onSelectionChanged:
+                                                                _onSelectedChanged,
+                                                          ),
+                                                        );
+                                                      });
+                                                }),
+                                            RaisedButton(
+                                                color: Colors.blue,
+                                                onPressed: () {
+                                                  getCreditPerDay();
+                                                },
+                                                child: Text("Consulter",
+                                                    style: GoogleFonts.cairo(
+                                                        color: Color(0xffffffff),
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 15)))
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 150,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(8),
+                                          child: Container(
                                             child: Text(
-                                                "cliquez pour choisir la période à vérifier",
+                                                "veuillez saisir le numéro de la commande que vous souhaitez vérifier",
                                                 style: GoogleFonts.cairo(
-                                                    color: Color(0xffffffff),
+                                                    color: Color(0xff000000),
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15)),
-                                            onPressed: () {
-                                              showModalBottomSheet(
-                                                  context: context,
-                                                  builder: (BuildContext
-                                                      buildcontext) {
-                                                    return Container(
-                                                      height: 600,
-                                                      child: SfDateRangePicker(
-                                                        view:
-                                                            DateRangePickerView
-                                                                .month,
-                                                        monthViewSettings:
-                                                            DateRangePickerMonthViewSettings(
-                                                                firstDayOfWeek:
-                                                                    1),
-                                                        selectionMode:
-                                                            DateRangePickerSelectionMode
-                                                                .range,
-                                                        minDate: DateTime(
-                                                            2021, 10, 30),
-                                                        maxDate: DateTime(
-                                                            DateTime.now().year,
-                                                            DateTime.now()
-                                                                .month,
-                                                            DateTime.now().day),
-                                                        onSelectionChanged:
-                                                            _onSelectedChanged,
-                                                      ),
-                                                    );
-                                                  });
-                                            }),
-                                        RaisedButton(
-                                            color: Colors.blue,
-                                            onPressed: () {
-                                              getCreditPerDay();
-                                            },
-                                            child: Text("Consulter",
-                                                style: GoogleFonts.cairo(
-                                                    color: Color(0xffffffff),
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15)))
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 150,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(8),
-                                      child: Container(
-                                        child: Text(
-                                            "veuillez saisir le numéro de la commande que vous souhaitez vérifier",
-                                            style: GoogleFonts.cairo(
-                                                color: Color(0xff000000),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15)),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 1,
-                                          child: TextField(
-                                            controller: commandNumberController,
-                                            scrollPadding:
-                                                EdgeInsets.only(bottom: 40),
-                                            decoration: InputDecoration(
-                                                labelText: "Numero de commande",
-                                                hintText:
-                                                    "Entrez le numero de commande",
-                                                prefixIcon:
-                                                    Icon(Icons.warehouse),
-                                                suffix: IconButton(
-                                                    icon: Icon(
-                                                      Icons.search,
-                                                      color: Colors.black,
-                                                    ),
-                                                    onPressed: () {
-                                                      creditDetail(
-                                                          commandNumberController
-                                                              .text);
-                                                    })),
                                           ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: TextField(
+                                                controller: commandNumberController,
+                                                scrollPadding:
+                                                    EdgeInsets.only(bottom: 40),
+                                                decoration: InputDecoration(
+                                                    labelText: "Numero de commande",
+                                                    hintText:
+                                                        "Entrez le numero de commande",
+                                                    prefixIcon:
+                                                        Icon(Icons.warehouse),
+                                                    suffix: IconButton(
+                                                        icon: Icon(
+                                                          Icons.search,
+                                                          color: Colors.black,
+                                                        ),
+                                                        onPressed: () {
+                                                          creditDetail(
+                                                              commandNumberController
+                                                                  .text);
+                                                        })),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          )
+                                  )
+                                ],
+                              ),
+                          ),
+                        )
                         : Expanded(
                             flex: 1,
                             child: Column(
@@ -998,30 +1100,21 @@ class _creditsPageState extends State<creditsPage> {
                                 Container(
                                     margin: EdgeInsets.all(16),
                                     child: TextField(
-                                        controller: clientNameController,
-                                        decoration: InputDecoration(
-                                            prefixIcon: Icon(Icons.person),
-                                            hintText: "Nom du client",
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                borderSide: BorderSide(
-                                                    color: Colors.blue))))),
+                                      controller: clientNameController,
+                                      decoration: InputDecoration(
+                                          prefixIcon: Icon(Icons.person),
+                                          hintText: "Nom du client",
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              borderSide: BorderSide(
+                                                  color: Colors.blue))),
+                                      onChanged: searchClient,
+                                    )),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    child: ListView.builder(
-                                        itemCount: creditedClients.length,
-                                        itemBuilder: (context, index) {
-                                          return Container(
-                                              child: Text(
-                                                  "${creditedClients[index]}"));
-                                        }),
-                                  ),
-                                )
+                                creditedClientsList()
                               ],
                             ),
                           )
