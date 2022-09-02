@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables
 import 'package:librairiedumaroc/views/salesdetailpagefortheday.dart';
+import 'package:librairiedumaroc/views/togglebar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -45,6 +46,8 @@ class _creditsPageState extends State<creditsPage> {
   num? salessum;
   num? creditssum;
   num? returnssum;
+  List<String> searchWith = ["Date et N.Commande", "Nom Client"];
+  int counter = 0;
   var isLoaded = false;
 
   @override
@@ -477,7 +480,11 @@ class _creditsPageState extends State<creditsPage> {
               height: 600,
               child: Column(
                 children: [
-                  Icon(Icons.drag_handle_sharp,color: Colors.white,size: 30,),
+                  Icon(
+                    Icons.drag_handle_sharp,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                   Expanded(
                     flex: 1,
                     child: ClipRRect(
@@ -674,10 +681,14 @@ class _creditsPageState extends State<creditsPage> {
                                                         height: 5,
                                                       ),
                                                       Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
                                                           Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             children: [
                                                               Text(
                                                                   "Client : ${creditToday.client}",
@@ -829,112 +840,127 @@ class _creditsPageState extends State<creditsPage> {
                 replacement: const Center(
                   child: CircularProgressIndicator(),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Text(
-                            "Veuillez choisir la période que vous souhaitez vérifier.",
-                            style: GoogleFonts.cairo(
-                                color: Color(0xff000000),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15)),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(
+                  children: [
+                    ToggleBar(
+                        labels: searchWith,
+                        textColor: Colors.black,
+                        selectedTextColor: Colors.white,
+                        onSelectionUpdated: (index) {
+                          setState(() {
+                            counter = index;
+                          });
+                          print(searchWith[counter]);
+                        }),
+                    searchWith[counter] == "Date et N.Commande" ? Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
                         children: [
-                          RaisedButton(
-                              color: Colors.blue,
+                          Center(
+                            child: Text(
+                                "Veuillez choisir la période que vous souhaitez vérifier.",
+                                style: GoogleFonts.cairo(
+                                    color: Color(0xff000000),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15)),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RaisedButton(
+                                  color: Colors.blue,
+                                  child: Text(
+                                      "cliquez pour choisir la période à vérifier",
+                                      style: GoogleFonts.cairo(
+                                          color: Color(0xffffffff),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15)),
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (BuildContext buildcontext) {
+                                          return Container(
+                                            height: 600,
+                                            child: SfDateRangePicker(
+                                              view: DateRangePickerView.month,
+                                              monthViewSettings:
+                                                  DateRangePickerMonthViewSettings(
+                                                      firstDayOfWeek: 1),
+                                              selectionMode:
+                                                  DateRangePickerSelectionMode
+                                                      .range,
+                                              minDate: DateTime(2021, 10, 30),
+                                              maxDate: DateTime(
+                                                  DateTime.now().year,
+                                                  DateTime.now().month,
+                                                  DateTime.now().day),
+                                              onSelectionChanged:
+                                                  _onSelectedChanged,
+                                            ),
+                                          );
+                                        });
+                                  }),
+                              RaisedButton(
+                                  color: Colors.blue,
+                                  onPressed: () {
+                                    getCreditPerDay();
+                                  },
+                                  child: Text("Consulter",
+                                      style: GoogleFonts.cairo(
+                                          color: Color(0xffffffff),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15)))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 200,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Container(
                               child: Text(
-                                  "cliquez pour choisir la période à vérifier",
+                                  "veuillez saisir le numéro de la commande que vous souhaitez vérifier",
                                   style: GoogleFonts.cairo(
-                                      color: Color(0xffffffff),
+                                      color: Color(0xff000000),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15)),
-                              onPressed: () {
-                                showModalBottomSheet(
-                                    context: context,
-                                    builder: (BuildContext buildcontext) {
-                                      return Container(
-                                        height: 600,
-                                        child: SfDateRangePicker(
-                                          view: DateRangePickerView.month,
-                                          monthViewSettings:
-                                              DateRangePickerMonthViewSettings(
-                                                  firstDayOfWeek: 1),
-                                          selectionMode:
-                                              DateRangePickerSelectionMode
-                                                  .range,
-                                          minDate: DateTime(2021, 10, 30),
-                                          maxDate: DateTime(
-                                              DateTime.now().year,
-                                              DateTime.now().month,
-                                              DateTime.now().day),
-                                          onSelectionChanged:
-                                              _onSelectedChanged,
-                                        ),
-                                      );
-                                    });
-                              }),
-                          RaisedButton(
-                              color: Colors.blue,
-                              onPressed: () {
-                                getCreditPerDay();
-                              },
-                              child: Text("Consulter",
-                                  style: GoogleFonts.cairo(
-                                      color: Color(0xffffffff),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15)))
-                        ],
-                      ),
-                      SizedBox(
-                        height: 200,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Container(
-                          child: Text(
-                              "veuillez saisir le numéro de la commande que vous souhaitez vérifier",
-                              style: GoogleFonts.cairo(
-                                  color: Color(0xff000000),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: TextField(
-                              controller: commandNumberController,
-                              scrollPadding: EdgeInsets.only(bottom: 40),
-                              decoration: InputDecoration(
-                                  labelText: "Numero de commande",
-                                  hintText: "Entrez le numero de commande",
-                                  prefixIcon: Icon(Icons.warehouse),
-                                  suffix: IconButton(
-                                      icon: Icon(
-                                        Icons.search,
-                                        color: Colors.black,
-                                      ),
-                                      onPressed: () {
-                                        creditDetail(
-                                            commandNumberController.text);
-                                      })),
                             ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: TextField(
+                                  controller: commandNumberController,
+                                  scrollPadding: EdgeInsets.only(bottom: 40),
+                                  decoration: InputDecoration(
+                                      labelText: "Numero de commande",
+                                      hintText: "Entrez le numero de commande",
+                                      prefixIcon: Icon(Icons.warehouse),
+                                      suffix: IconButton(
+                                          icon: Icon(
+                                            Icons.search,
+                                            color: Colors.black,
+                                          ),
+                                          onPressed: () {
+                                            creditDetail(
+                                                commandNumberController.text);
+                                          })),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    )
+                    : Text("lol this is easy")
+                  ],
                 ),
               ),
             ),
