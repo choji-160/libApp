@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names, prefer_typing_uninitialized_variables, unused_import
+// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names, prefer_typing_uninitialized_variables, unused_import, no_logic_in_create_state
 import 'package:flutter/rendering.dart';
 import 'package:librairiedumaroc/views/togglebar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -20,37 +20,32 @@ import 'package:librairiedumaroc/services/Returns.dart';
 import 'package:librairiedumaroc/services/Sales.dart';
 import '../services/Credits.dart';
 import '../services/SoldArticles.dart';
+
 class clientCredits extends StatefulWidget {
-  const clientCredits({Key? key}) : super(key: key);
+  final String client;
+  const clientCredits({Key? key, required this.client});
 
   @override
-  State<clientCredits> createState() => _clientCreditsState();
+  State<clientCredits> createState() => _clientCreditsState(client: client);
 }
 
 class _clientCreditsState extends State<clientCredits> {
-  
-  DateTime datetime =
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  final String client;
+  _clientCreditsState({Key? key, required this.client});
   List<Sale>? sales;
-  List<Sale>? salesToday;
   List<SoldArticle>? soldarticles;
   List<SoldArticle>? soldarticlesNum;
   List<Article>? articles;
   List<Client>? clients;
   List<Credit>? credits;
-  List<Credit>? creditsToday;
+  List<Credit>? creditedClient;
   List<Return>? returns;
-  List<Return>? returnsToday;
   List<ReturnedArticle>? returnedArticles;
   List<ReturnedArticle>? returnedArticlesNum;
-  num? salessum;
-  num? creditssum;
-  num? returnssum;
-  List<String> searchWith = ["Date et N.Commande", "Nom Client"];
-  int counter = 0;
+  num totalSum = 0;
+  num avanceSum = 0;
+  num restSum = 0;
   var isLoaded = false;
-  List creditedClients = [];
-  List results = [];
 
   @override
   void initState() {
@@ -104,28 +99,9 @@ class _clientCreditsState extends State<clientCredits> {
 
   getCredit() async {
     credits = await Credits().getCredits();
-    for (var client in credits!) {
-      bool exists = false;
-      for (var creditedClient in creditedClients) {
-        if (client.client == creditedClient) {
-          exists = true;
-        }
-      }
-      if (!exists) {
-        creditedClients.add(client.client);
-      }
-    }
-
-    for (var client in credits!) {
-      bool exists = false;
-      for (var result in results) {
-        if (client.client == result) {
-          exists = true;
-        }
-      }
-      if (!exists) {
-        results.add(client.client);
-      }
+    creditedClient = credits!.where((element) => element.client == client).toList();
+    for (var clientCredited in creditedClient!) {
+      clientCredited.total == null ? totalSum += 0 : totalSum += clientCredited.total!;
     }
     if (articles != null) {
       setState(() {
@@ -206,6 +182,25 @@ class _clientCreditsState extends State<clientCredits> {
 
   @override
   Widget build(BuildContext context) {
-    
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        title: Text(
+          '$client',
+          style: GoogleFonts.cairo(
+              color: Color(0xff000000),
+              fontWeight: FontWeight.bold,
+              fontSize: 25),
+        ),
+        elevation: 0,
+        centerTitle: true,
+      ),
+      body: Visibility(
+        visible: isLoaded,
+        replacement: Center(child: CircularProgressIndicator()),
+        child: Container(),
+      ),
+    );
   }
 }

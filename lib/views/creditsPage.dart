@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names, prefer_typing_uninitialized_variables
 import 'package:flutter/rendering.dart';
+import 'package:librairiedumaroc/views/clientCredits.dart';
 import 'package:librairiedumaroc/views/togglebar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flutter/material.dart';
@@ -891,11 +892,31 @@ class _creditsPageState extends State<creditsPage> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Client : ${creditedClients[index]}",
-                                  style: GoogleFonts.cairo(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15)),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Client : ${creditedClients[index]}",
+                                      style: GoogleFonts.cairo(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15)),
+                                  RaisedButton(
+                                      color: Color(0xff6b9080),
+                                      child: Text("Details",
+                                          style: GoogleFonts.cairo(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15)),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    clientCredits(client:creditedClients[index])));
+                                      })
+                                ],
+                              ),
                               SizedBox(
                                 height: 20,
                               ),
@@ -966,9 +987,9 @@ class _creditsPageState extends State<creditsPage> {
                         }),
                     searchWith[counter] == "Date et N.Commande"
                         ? Expanded(
-                          flex: 1,
-                          child: SingleChildScrollView(
-                            child: Column(
+                            flex: 1,
+                            child: SingleChildScrollView(
+                              child: Column(
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(20.0),
@@ -994,8 +1015,10 @@ class _creditsPageState extends State<creditsPage> {
                                                 child: Text(
                                                     "cliquez pour choisir la période à vérifier",
                                                     style: GoogleFonts.cairo(
-                                                        color: Color(0xffffffff),
-                                                        fontWeight: FontWeight.bold,
+                                                        color:
+                                                            Color(0xffffffff),
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                         fontSize: 15)),
                                                 onPressed: () {
                                                   showModalBottomSheet(
@@ -1004,7 +1027,8 @@ class _creditsPageState extends State<creditsPage> {
                                                           buildcontext) {
                                                         return Container(
                                                           height: 600,
-                                                          child: SfDateRangePicker(
+                                                          child:
+                                                              SfDateRangePicker(
                                                             view:
                                                                 DateRangePickerView
                                                                     .month,
@@ -1018,10 +1042,12 @@ class _creditsPageState extends State<creditsPage> {
                                                             minDate: DateTime(
                                                                 2021, 10, 30),
                                                             maxDate: DateTime(
-                                                                DateTime.now().year,
+                                                                DateTime.now()
+                                                                    .year,
                                                                 DateTime.now()
                                                                     .month,
-                                                                DateTime.now().day),
+                                                                DateTime.now()
+                                                                    .day),
                                                             onSelectionChanged:
                                                                 _onSelectedChanged,
                                                           ),
@@ -1035,8 +1061,10 @@ class _creditsPageState extends State<creditsPage> {
                                                 },
                                                 child: Text("Consulter",
                                                     style: GoogleFonts.cairo(
-                                                        color: Color(0xffffffff),
-                                                        fontWeight: FontWeight.bold,
+                                                        color:
+                                                            Color(0xffffffff),
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                         fontSize: 15)))
                                           ],
                                         ),
@@ -1062,11 +1090,13 @@ class _creditsPageState extends State<creditsPage> {
                                             Expanded(
                                               flex: 1,
                                               child: TextField(
-                                                controller: commandNumberController,
+                                                controller:
+                                                    commandNumberController,
                                                 scrollPadding:
                                                     EdgeInsets.only(bottom: 40),
                                                 decoration: InputDecoration(
-                                                    labelText: "Numero de commande",
+                                                    labelText:
+                                                        "Numero de commande",
                                                     hintText:
                                                         "Entrez le numero de commande",
                                                     prefixIcon:
@@ -1090,8 +1120,8 @@ class _creditsPageState extends State<creditsPage> {
                                   )
                                 ],
                               ),
-                          ),
-                        )
+                            ),
+                          )
                         : Expanded(
                             flex: 1,
                             child: Column(

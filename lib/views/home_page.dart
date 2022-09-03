@@ -555,87 +555,92 @@ class _HomePageState extends State<HomePage> {
             height: MediaQuery.of(context).size.height * 0.8,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: returnsToday?.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
+              child: Column(
+                children: [
+                  Icon(Icons.drag_handle, color: Colors.white,),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: returnsToday?.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "Commande № : ${returnsToday![index].numerocommande.toString()}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Client : ${returnsToday![index].client.toString()}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        returnDetails(index, context);
-                                      },
-                                      child: Text(
-                                        "DETAILS",
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Commande № : ${returnsToday![index].numerocommande.toString()}",
                                         style: GoogleFonts.cairo(
-                                          color: Color(0xffffffff),
+                                          color: Color(0xff000000),
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      color: Color(0xff023047),
-                                    ),
+                                      Text(
+                                        "Client : ${returnsToday![index].client.toString()}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(10)),
+                                        child: FlatButton(
+                                          onPressed: () {
+                                            returnDetails(index, context);
+                                          },
+                                          child: Text(
+                                            "DETAILS",
+                                            style: GoogleFonts.cairo(
+                                              color: Color(0xffffffff),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          color: Color(0xff023047),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "Nombre articles : ${returnsToday![index].nombreArticle.toString()}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Totale : ${returnsToday![index].total.toString()}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Utilisateur : ${returnsToday![index].utilisateur.toString()}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   )
                                 ],
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "Nombre articles : ${returnsToday![index].nombreArticle.toString()}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Totale : ${returnsToday![index].total.toString()}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Utilisateur : ${returnsToday![index].utilisateur.toString()}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  }),
+                        );
+                      }),
+                ],
+              ),
             ),
           );
         });
