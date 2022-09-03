@@ -936,8 +936,6 @@ class _creditsPageState extends State<creditsPage> {
     setState(() {
       creditedClients = results;
     });
-    print(results);
-    print(value);
     final suggestions = creditedClients.where((element) {
       final clientName = element.toString().toLowerCase();
       final input = value.toLowerCase();
@@ -983,7 +981,6 @@ class _creditsPageState extends State<creditsPage> {
                           setState(() {
                             counter = index;
                           });
-                          print(searchWith[counter]);
                         }),
                     searchWith[counter] == "Date et N.Commande"
                         ? Expanded(

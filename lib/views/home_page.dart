@@ -557,7 +557,11 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Column(
                 children: [
-                  Icon(Icons.drag_handle, color: Colors.white,),
+                  Icon(
+                    Icons.drag_handle,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                   ListView.builder(
                       shrinkWrap: true,
                       itemCount: returnsToday?.length,
@@ -569,10 +573,12 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.all(10.0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Commande № : ${returnsToday![index].numerocommande.toString()}",
@@ -589,8 +595,8 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(10)),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
                                         child: FlatButton(
                                           onPressed: () {
                                             returnDetails(index, context);

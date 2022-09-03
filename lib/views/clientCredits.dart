@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names, prefer_typing_uninitialized_variables, unused_import, no_logic_in_create_state
+// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names, prefer_typing_uninitialized_variables, unused_import, no_logic_in_create_state, use_key_in_widget_constructors
 import 'package:flutter/rendering.dart';
 import 'package:librairiedumaroc/views/togglebar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -33,6 +33,7 @@ class _clientCreditsState extends State<clientCredits> {
   final String client;
   _clientCreditsState({Key? key, required this.client});
   List<Sale>? sales;
+  List<Sale>? creditedSale;
   List<SoldArticle>? soldarticles;
   List<SoldArticle>? soldarticlesNum;
   List<Article>? articles;
@@ -99,9 +100,19 @@ class _clientCreditsState extends State<clientCredits> {
 
   getCredit() async {
     credits = await Credits().getCredits();
-    creditedClient = credits!.where((element) => element.client == client).toList();
+    creditedClient =
+        credits!.where((element) => element.client == client).toList();
+    print(creditedClient!.length);
     for (var clientCredited in creditedClient!) {
-      clientCredited.total == null ? totalSum += 0 : totalSum += clientCredited.total!;
+      clientCredited.total == null
+          ? totalSum += 0
+          : totalSum += clientCredited.total!;
+      clientCredited.avance == null
+          ? avanceSum += 0
+          : avanceSum += clientCredited.avance!;
+      clientCredited.rest == null
+          ? restSum += 0
+          : restSum += clientCredited.rest!;
     }
     if (articles != null) {
       setState(() {
@@ -186,20 +197,357 @@ class _clientCreditsState extends State<clientCredits> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        title: Text(
-          '$client',
-          style: GoogleFonts.cairo(
-              color: Color(0xff000000),
-              fontWeight: FontWeight.bold,
-              fontSize: 25),
-        ),
         elevation: 0,
         centerTitle: true,
       ),
       body: Visibility(
         visible: isLoaded,
         replacement: Center(child: CircularProgressIndicator()),
-        child: Container(),
+        child: Container(
+          child: Column(
+            children: [
+              Center(
+                child: Text("$client",
+                    style: GoogleFonts.cairo(
+                        color: Color(0xff000000),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30)),
+              ),
+              Center(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        children: [
+                          Text("Total",
+                              style: GoogleFonts.cairo(
+                                  color: Color(0xff000000),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20)),
+                          ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: const [
+                                    Color(0xff00B4DB),
+                                    Color(0xff0083B0)
+                                  ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight)),
+                              child: Center(
+                                child: Text(
+                                  "${totalSum.toStringAsFixed(2)}",
+                                  style: GoogleFonts.cairo(
+                                    color: Color(0xffffffff),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text("Avance",
+                              style: GoogleFonts.cairo(
+                                  color: Color(0xff000000),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20)),
+                          ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: const [
+                                    Color(0xff00B4DB),
+                                    Color(0xff0083B0)
+                                  ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight)),
+                              child: Center(
+                                child: Text(
+                                  "${avanceSum.toStringAsFixed(2)}",
+                                  style: GoogleFonts.cairo(
+                                    color: Color(0xffffffff),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text("Rest",
+                              style: GoogleFonts.cairo(
+                                  color: Color(0xff000000),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20)),
+                          ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: const [
+                                    Color(0xff00B4DB),
+                                    Color(0xff0083B0)
+                                  ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight)),
+                              child: Center(
+                                child: Text(
+                                  "${restSum.toStringAsFixed(2)}",
+                                  style: GoogleFonts.cairo(
+                                    color: Color(0xffffffff),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ]),
+              )),
+              SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15)),
+                  child: Container(
+                    color: Color(0xfff4a261),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: creditedClient?.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                              child: Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Date : ${creditedClient![index].date.toString().substring(0, 10)}",
+                                                style: GoogleFonts.cairo(
+                                                  color: Color(0xff000000),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                "Commande № : ${creditedClient![index].numeroCommande.toString()}",
+                                                style: GoogleFonts.cairo(
+                                                  color: Color(0xff000000),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                "Utilisateur : ${creditedClient![index].utilisateur.toString()}",
+                                                style: GoogleFonts.cairo(
+                                                  color: Color(0xff000000),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            child: FlatButton(
+                                              onPressed: () {
+                                                // saleDetails(index, context);
+                                              },
+                                              color: Color(0xff023047),
+                                              child: Text(
+                                                "DETAILS",
+                                                style: GoogleFonts.cairo(
+                                                  color: Color(0xffffffff),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Text("Total",
+                                                    style: GoogleFonts.cairo(
+                                                        color:
+                                                            Color(0xff000000),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 15)),
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(20)),
+                                                  child: Container(
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        gradient: LinearGradient(
+                                                            colors: const [
+                                                          Color(0xff00B4DB),
+                                                          Color(0xff0083B0)
+                                                        ],
+                                                            begin: Alignment
+                                                                .topLeft,
+                                                            end: Alignment
+                                                                .bottomRight)),
+                                                    child: Center(
+                                                      child: Text(
+                                                        creditedClient![index]
+                                                                    .total ==
+                                                                null
+                                                            ? "0 DH"
+                                                            : "${creditedClient![index].total!.toStringAsFixed(2)}",
+                                                        style:
+                                                            GoogleFonts.cairo(
+                                                          color:
+                                                              Color(0xffffffff),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                Text("Avance",
+                                                    style: GoogleFonts.cairo(
+                                                        color:
+                                                            Color(0xff000000),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 15)),
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(20)),
+                                                  child: Container(
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        gradient: LinearGradient(
+                                                            colors: const [
+                                                          Color(0xff00B4DB),
+                                                          Color(0xff0083B0)
+                                                        ],
+                                                            begin: Alignment
+                                                                .topLeft,
+                                                            end: Alignment
+                                                                .bottomRight)),
+                                                    child: Center(
+                                                      child: Text(
+                                                        creditedClient![index]
+                                                                    .avance ==
+                                                                null
+                                                            ? "0 DH"
+                                                            : "${creditedClient![index].avance!.toStringAsFixed(2)}",
+                                                        style:
+                                                            GoogleFonts.cairo(
+                                                          color:
+                                                              Color(0xffffffff),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                Text("Rest",
+                                                    style: GoogleFonts.cairo(
+                                                        color:
+                                                            Color(0xff000000),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 15)),
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(20)),
+                                                  child: Container(
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        gradient: LinearGradient(
+                                                            colors: const [
+                                                          Color(0xff00B4DB),
+                                                          Color(0xff0083B0)
+                                                        ],
+                                                            begin: Alignment
+                                                                .topLeft,
+                                                            end: Alignment
+                                                                .bottomRight)),
+                                                    child: Center(
+                                                      child: Text(
+                                                        creditedClient![index]
+                                                                    .rest ==
+                                                                null
+                                                            ? "0 DH"
+                                                            : "${creditedClient![index].rest!.toStringAsFixed(2)}",
+                                                        style:
+                                                            GoogleFonts.cairo(
+                                                          color:
+                                                              Color(0xffffffff),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ])
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
