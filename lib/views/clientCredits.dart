@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names, prefer_typing_uninitialized_variables, unused_import, no_logic_in_create_state, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names, prefer_typing_uninitialized_variables, unused_import, no_logic_in_create_state, use_key_in_widget_constructors, await_only_futures
 import 'package:flutter/rendering.dart';
 import 'package:librairiedumaroc/views/togglebar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -39,7 +39,7 @@ class _clientCreditsState extends State<clientCredits> {
   List<Article>? articles;
   List<Client>? clients;
   List<Credit>? credits;
-  List<Credit>? creditedClient;
+  List<Credit> creditedClient = [];
   List<Return>? returns;
   List<ReturnedArticle>? returnedArticles;
   List<ReturnedArticle>? returnedArticlesNum;
@@ -100,9 +100,8 @@ class _clientCreditsState extends State<clientCredits> {
 
   getCredit() async {
     credits = await Credits().getCredits();
-    creditedClient =
-        credits!.where((element) => element.client == client).toList();
-    for (var clientCredited in creditedClient!) {
+    creditedClient = credits!.where((element) => element.client == client).toList();
+    for (var clientCredited in creditedClient) {
       clientCredited.total == null
           ? totalSum += 0
           : totalSum += clientCredited.total!;
@@ -219,69 +218,78 @@ class _clientCreditsState extends State<clientCredits> {
                       child: Column(
                         children: [
                           Text(
-                            "Informations générales sur la commande : ${creditedSale?[0].numeroCommande.toString()}",
+                            "Informations générales sur la commande : ${creditedSale![0].numeroCommande.toString()}",
                             style: GoogleFonts.cairo(
                               color: Color(0xff000000),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           SizedBox(height: 5),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Column(
                             children: [
-                              Column(
+                              Text("Date : ${creditedSale![0].dateVent.toString().substring(0,10)}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),),
+                              Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "Client : ${creditedSale?[0].client.toString()}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Client : ${creditedSale![0].client.toString()}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Utilisateur: ${creditedSale![0].utilisateur.toString()}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "M_paiement : ${creditedSale![0].mPaiement.toString()}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    "Utilisateur: ${creditedSale?[0].utilisateur.toString()}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "M_paiement : ${creditedSale?[0].mPaiement.toString()}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "Nombre articles : ${creditedSale![0].nombreArticle.toString()}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Totale : ${creditedSale![0].totale.toString()}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Type : ${creditedSale![0].type.toString().substring(0, 2)}",
+                                        style: GoogleFonts.cairo(
+                                          color: Color(0xff000000),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "Nombre articles : ${creditedSale?[0].nombreArticle.toString()}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Totale : ${creditedSale?[0].totale.toString()}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Type : ${creditedSale?[0].type.toString().substring(0, 2)}",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xff000000),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              )
                             ],
                           ),
                         ],
@@ -518,224 +526,277 @@ class _clientCreditsState extends State<clientCredits> {
                   child: Container(
                     color: Color(0xfff4a261),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: creditedClient?.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                              child: Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              for (var clientCredited in creditedClient)
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  child: Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
                                         children: [
-                                          Column(
+                                          Row(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                "Date : ${creditedClient![index].date.toString().substring(0, 10)}",
-                                                style: GoogleFonts.cairo(
-                                                  color: Color(0xff000000),
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Date : ${clientCredited.date.toString().substring(0, 10)}",
+                                                    style: GoogleFonts.cairo(
+                                                      color: Color(0xff000000),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "Commande № : ${clientCredited.numeroCommande.toString()}",
+                                                    style: GoogleFonts.cairo(
+                                                      color: Color(0xff000000),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "Utilisateur : ${clientCredited.utilisateur.toString()}",
+                                                    style: GoogleFonts.cairo(
+                                                      color: Color(0xff000000),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              Text(
-                                                "Commande № : ${creditedClient![index].numeroCommande.toString()}",
-                                                style: GoogleFonts.cairo(
-                                                  color: Color(0xff000000),
-                                                  fontWeight: FontWeight.bold,
+                                              ClipRRect(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                child: FlatButton(
+                                                  onPressed: () {
+                                                    clientCredited
+                                                                .numeroCommande ==
+                                                            null
+                                                        ? showDialog(
+                                                            context: context,
+                                                            barrierDismissible:
+                                                                true,
+                                                            builder: (BuildContext
+                                                                    buildContext) =>
+                                                                AlertDialog(
+                                                                  actions: [
+                                                                    FlatButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        child: Text(
+                                                                            "annuler",
+                                                                            style: GoogleFonts.cairo(
+                                                                                color: Color(0xffffffff),
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 20)))
+                                                                  ],
+                                                                  content: Text(
+                                                                      "Le numero de commande est null",
+                                                                      style: GoogleFonts.cairo(
+                                                                          color: Color(
+                                                                              0xffffffff),
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          fontSize:
+                                                                              20)),
+                                                                  backgroundColor:
+                                                                      Colors.blue[
+                                                                          900],
+                                                                ))
+                                                        : soldarticlesNum!.isEmpty == true? CircularProgressIndicator() : saleDetails(
+                                                            clientCredited
+                                                                .numeroCommande
+                                                                .toString());
+                                                  },
+                                                  color: Color(0xff023047),
+                                                  child: Text(
+                                                    "DETAILS",
+                                                    style: GoogleFonts.cairo(
+                                                      color: Color(0xffffffff),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                              Text(
-                                                "Utilisateur : ${creditedClient![index].utilisateur.toString()}",
-                                                style: GoogleFonts.cairo(
-                                                  color: Color(0xff000000),
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
+                                              )
                                             ],
                                           ),
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            child: FlatButton(
-                                              onPressed: () {
-                                                getCreditedSale(
-                                                    creditedClient![index]
-                                                        .numeroCommande
-                                                        .toString());
-                                                saleDetails(
-                                                    creditedClient![index]
-                                                        .numeroCommande
-                                                        .toString());
-                                              },
-                                              color: Color(0xff023047),
-                                              child: Text(
-                                                "DETAILS",
-                                                style: GoogleFonts.cairo(
-                                                  color: Color(0xffffffff),
-                                                  fontWeight: FontWeight.bold,
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    Text("Total",
+                                                        style:
+                                                            GoogleFonts.cairo(
+                                                                color: Color(
+                                                                    0xff000000),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 15)),
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                                  .all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                      child: Container(
+                                                        width: 100,
+                                                        decoration: BoxDecoration(
+                                                            gradient: LinearGradient(
+                                                                colors: const [
+                                                              Color(0xff00B4DB),
+                                                              Color(0xff0083B0)
+                                                            ],
+                                                                begin: Alignment
+                                                                    .topLeft,
+                                                                end: Alignment
+                                                                    .bottomRight)),
+                                                        child: Center(
+                                                          child: Text(
+                                                            clientCredited
+                                                                        .total ==
+                                                                    null
+                                                                ? "Null"
+                                                                : "${clientCredited.total!.toStringAsFixed(2)}",
+                                                            style: GoogleFonts
+                                                                .cairo(
+                                                              color: Color(
+                                                                  0xffffffff),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
-                                            ),
-                                          )
+                                                Column(
+                                                  children: [
+                                                    Text("Avance",
+                                                        style:
+                                                            GoogleFonts.cairo(
+                                                                color: Color(
+                                                                    0xff000000),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 15)),
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                                  .all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                      child: Container(
+                                                        width: 100,
+                                                        decoration: BoxDecoration(
+                                                            gradient: LinearGradient(
+                                                                colors: const [
+                                                              Color(0xff00B4DB),
+                                                              Color(0xff0083B0)
+                                                            ],
+                                                                begin: Alignment
+                                                                    .topLeft,
+                                                                end: Alignment
+                                                                    .bottomRight)),
+                                                        child: Center(
+                                                          child: Text(
+                                                            clientCredited
+                                                                        .avance ==
+                                                                    null
+                                                                ? "Null"
+                                                                : "${clientCredited.avance!.toStringAsFixed(2)}",
+                                                            style: GoogleFonts
+                                                                .cairo(
+                                                              color: Color(
+                                                                  0xffffffff),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Text("Rest",
+                                                        style:
+                                                            GoogleFonts.cairo(
+                                                                color: Color(
+                                                                    0xff000000),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 15)),
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                                  .all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                      child: Container(
+                                                        width: 100,
+                                                        decoration: BoxDecoration(
+                                                            gradient: LinearGradient(
+                                                                colors: const [
+                                                              Color(0xff00B4DB),
+                                                              Color(0xff0083B0)
+                                                            ],
+                                                                begin: Alignment
+                                                                    .topLeft,
+                                                                end: Alignment
+                                                                    .bottomRight)),
+                                                        child: Center(
+                                                          child: Text(
+                                                            clientCredited
+                                                                        .rest ==
+                                                                    null
+                                                                ? "Null"
+                                                                : "${clientCredited.rest!.toStringAsFixed(2)}",
+                                                            style: GoogleFonts
+                                                                .cairo(
+                                                              color: Color(
+                                                                  0xffffffff),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ])
                                         ],
                                       ),
-                                      Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Column(
-                                              children: [
-                                                Text("Total",
-                                                    style: GoogleFonts.cairo(
-                                                        color:
-                                                            Color(0xff000000),
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 15)),
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(20)),
-                                                  child: Container(
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                            colors: const [
-                                                          Color(0xff00B4DB),
-                                                          Color(0xff0083B0)
-                                                        ],
-                                                            begin: Alignment
-                                                                .topLeft,
-                                                            end: Alignment
-                                                                .bottomRight)),
-                                                    child: Center(
-                                                      child: Text(
-                                                        creditedClient![index]
-                                                                    .total ==
-                                                                null
-                                                            ? "Null"
-                                                            : "${creditedClient![index].total!.toStringAsFixed(2)}",
-                                                        style:
-                                                            GoogleFonts.cairo(
-                                                          color:
-                                                              Color(0xffffffff),
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text("Avance",
-                                                    style: GoogleFonts.cairo(
-                                                        color:
-                                                            Color(0xff000000),
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 15)),
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(20)),
-                                                  child: Container(
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                            colors: const [
-                                                          Color(0xff00B4DB),
-                                                          Color(0xff0083B0)
-                                                        ],
-                                                            begin: Alignment
-                                                                .topLeft,
-                                                            end: Alignment
-                                                                .bottomRight)),
-                                                    child: Center(
-                                                      child: Text(
-                                                        creditedClient![index]
-                                                                    .avance ==
-                                                                null
-                                                            ? "Null"
-                                                            : "${creditedClient![index].avance!.toStringAsFixed(2)}",
-                                                        style:
-                                                            GoogleFonts.cairo(
-                                                          color:
-                                                              Color(0xffffffff),
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text("Rest",
-                                                    style: GoogleFonts.cairo(
-                                                        color:
-                                                            Color(0xff000000),
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 15)),
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(20)),
-                                                  child: Container(
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                            colors: const [
-                                                          Color(0xff00B4DB),
-                                                          Color(0xff0083B0)
-                                                        ],
-                                                            begin: Alignment
-                                                                .topLeft,
-                                                            end: Alignment
-                                                                .bottomRight)),
-                                                    child: Center(
-                                                      child: Text(
-                                                        creditedClient![index]
-                                                                    .rest ==
-                                                                null
-                                                            ? "Null"
-                                                            : "${creditedClient![index].rest!.toStringAsFixed(2)}",
-                                                        style:
-                                                            GoogleFonts.cairo(
-                                                          color:
-                                                              Color(0xffffffff),
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ])
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            );
-                          }),
-                    ),
+                                )
+                            ],
+                          ),
+                        )),
                   ),
                 ),
               )

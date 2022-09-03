@@ -660,194 +660,193 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
           SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    child: Container(
-                      margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                      width: 170,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Text(
-                                "Ventes",
-                                style: GoogleFonts.cairo(
-                                  color: Color(0xffffffff),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Text(
-                                "${salessum.toStringAsFixed(2)} DHS",
-                                style: GoogleFonts.cairo(
-                                  color: Color(0xffffffff),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Color(0xff00B4DB), Color(0xff0083B0)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight)),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    child: Container(
-                      margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                      width: 170,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                  child: Text(
-                                    "Retours",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xffffffff),
-                                      fontWeight: FontWeight.bold,
-                                    ),
+          Container(
+            width:MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      child: Container(
+                        width: 170,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Text(
+                                  "Ventes",
+                                  style: GoogleFonts.cairo(
+                                    color: Color(0xffffffff),
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                  child: Text(
-                                    "${returnssum.toStringAsFixed(2)} DHS",
-                                    style: GoogleFonts.cairo(
-                                      color: Color(0xffffffff),
-                                      fontWeight: FontWeight.bold,
+                              ),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Text(
+                                  "${salessum.toStringAsFixed(2)} DHS",
+                                  style: GoogleFonts.cairo(
+                                    color: Color(0xffffffff),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Color(0xff00B4DB), Color(0xff0083B0)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight)),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      child: Container(
+                        width: 170,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    child: Text(
+                                      "Retours",
+                                      style: GoogleFonts.cairo(
+                                        color: Color(0xffffffff),
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                            Container(
-                              child: returnlength == 0
-                                  ? Container()
-                                  : IconButton(
-                                      onPressed: () {
-                                        returnsListView();
-                                      },
-                                      icon: Icon(Icons.info_rounded),
-                                      color: Color(0xff000000),
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    child: Text(
+                                      "${returnssum.toStringAsFixed(2)} DHS",
+                                      style: GoogleFonts.cairo(
+                                        color: Color(0xffffffff),
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                            )
-                          ],
+                                  )
+                                ],
+                              ),
+                              Container(
+                                child: returnlength == 0
+                                    ? Container()
+                                    : IconButton(
+                                        onPressed: () {
+                                          returnsListView();
+                                        },
+                                        icon: Icon(Icons.info_rounded),
+                                        color: Color(0xff000000),
+                                      ),
+                              )
+                            ],
+                          ),
                         ),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Color(0xffb84fce), Color(0xffd4acfb)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight)),
                       ),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Color(0xffb84fce), Color(0xffd4acfb)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight)),
                     ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    child: Container(
-                      margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                      width: 170,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Text(
-                                "Credits",
-                                style: GoogleFonts.cairo(
-                                  color: Color(0xffffffff),
-                                  fontWeight: FontWeight.bold,
+                  ],
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      child: Container(
+                        width: 170,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Text(
+                                  "Credits",
+                                  style: GoogleFonts.cairo(
+                                    color: Color(0xffffffff),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Text(
-                                "${creditssum.toStringAsFixed(2)} DHS",
-                                style: GoogleFonts.cairo(
-                                  color: Color(0xffffffff),
-                                  fontWeight: FontWeight.bold,
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Text(
+                                  "${creditssum.toStringAsFixed(2)} DHS",
+                                  style: GoogleFonts.cairo(
+                                    color: Color(0xffffffff),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Color(0xffED213A), Color(0xff93291E)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight)),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      child: Container(
+                        width: 170,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Text(
+                                  "Caisse (espèces)",
+                                  style: GoogleFonts.cairo(
+                                    color: Color(0xffffffff),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            )
-                          ],
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: getRegistryTotal(),
+                              )
+                            ],
+                          ),
                         ),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Color(0xfffc4a1a), Color(0xfff7b733)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight)),
                       ),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Color(0xffED213A), Color(0xff93291E)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight)),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    child: Container(
-                      margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                      width: 170,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Text(
-                                "Caisse (espèces)",
-                                style: GoogleFonts.cairo(
-                                  color: Color(0xffffffff),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: getRegistryTotal(),
-                            )
-                          ],
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Color(0xfffc4a1a), Color(0xfff7b733)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight)),
-                    ),
-                  ),
-                ],
-              )
-            ],
+                  ],
+                )
+              ],
+            ),
           ),
           SizedBox(
             height: 20,
