@@ -725,6 +725,8 @@ class _salesPageState extends State<salesPage> {
         });
   }
 
+  DateRangePickerController _dateRangePickerController =
+      DateRangePickerController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -781,6 +783,13 @@ class _salesPageState extends State<salesPage> {
                                   return Container(
                                     height: 600,
                                     child: SfDateRangePicker(
+                                      showActionButtons: true,
+                                      onSubmit: (val) {
+                                        getStatisticsPerDay();
+                                      },
+                                      controller: _dateRangePickerController,
+                                      onCancel: _dateRangePickerController
+                                          .selectedRange = null,
                                       view: DateRangePickerView.month,
                                       monthViewSettings:
                                           DateRangePickerMonthViewSettings(
@@ -797,16 +806,6 @@ class _salesPageState extends State<salesPage> {
                                   );
                                 });
                           }),
-                      RaisedButton(
-                          color: Colors.blue,
-                          onPressed: () {
-                            getStatisticsPerDay();
-                          },
-                          child: Text("Consulter",
-                              style: GoogleFonts.cairo(
-                                  color: Color(0xffffffff),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15)))
                     ],
                   ),
                   SizedBox(

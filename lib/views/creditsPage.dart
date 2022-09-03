@@ -1,4 +1,5 @@
-// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names, prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, file_names, prefer_typing_uninitialized_variables, prefer_final_fields, unused_field
+
 import 'package:flutter/rendering.dart';
 import 'package:librairiedumaroc/views/clientCredits.dart';
 import 'package:librairiedumaroc/views/togglebar.dart';
@@ -913,7 +914,9 @@ class _creditsPageState extends State<creditsPage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    clientCredits(client:creditedClients[index])));
+                                                    clientCredits(
+                                                        client: creditedClients[
+                                                            index])));
                                       })
                                 ],
                               ),
@@ -944,6 +947,8 @@ class _creditsPageState extends State<creditsPage> {
     setState(() => creditedClients = suggestions);
   }
 
+  DateRangePickerController _dateRangePickerController =
+      DateRangePickerController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1023,9 +1028,24 @@ class _creditsPageState extends State<creditsPage> {
                                                       builder: (BuildContext
                                                           buildcontext) {
                                                         return Container(
-                                                          height: 600,
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height *
+                                                              1,
                                                           child:
                                                               SfDateRangePicker(
+                                                            showActionButtons:
+                                                                true,
+                                                            onSubmit: (val) {
+                                                              getCreditPerDay();
+                                                            },
+                                                            controller:
+                                                                _dateRangePickerController,
+                                                            onCancel:
+                                                                _dateRangePickerController
+                                                                        .selectedRange =
+                                                                    null,
                                                             view:
                                                                 DateRangePickerView
                                                                     .month,
@@ -1051,18 +1071,6 @@ class _creditsPageState extends State<creditsPage> {
                                                         );
                                                       });
                                                 }),
-                                            RaisedButton(
-                                                color: Colors.blue,
-                                                onPressed: () {
-                                                  getCreditPerDay();
-                                                },
-                                                child: Text("Consulter",
-                                                    style: GoogleFonts.cairo(
-                                                        color:
-                                                            Color(0xffffffff),
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 15)))
                                           ],
                                         ),
                                         SizedBox(
