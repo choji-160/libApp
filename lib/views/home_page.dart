@@ -192,188 +192,6 @@ class _HomePageState extends State<HomePage> {
         .toList();
   }
 
-  // Widget? saleDetails(index, context) {
-  //   getSoldArticlesNum(salesToday![index].numeroCommande);
-  //   showModalBottomSheet(
-  //       backgroundColor: Color(0xfff4a261),
-  //       isScrollControlled: true,
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: const BorderRadius.only(
-  //             topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-  //       ),
-  //       context: context,
-  //       builder: (BuildContext buildcontext) {
-  //         return Container(
-  //           height: 600,
-  //           child: Column(
-  //             children: [
-  //               Padding(
-  //                 padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-  //                 child: Card(
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.all(10.0),
-  //                     child: Column(
-  //                       children: [
-  //                         Text(
-  //                           "Informations générales sur la commande : ${salesToday![index].numeroCommande.toString()}",
-  //                           style: GoogleFonts.cairo(
-  //                             color: Color(0xff000000),
-  //                             fontWeight: FontWeight.bold,
-  //                           ),
-  //                         ),
-  //                         SizedBox(height: 5),
-  //                         Row(
-  //                           crossAxisAlignment: CrossAxisAlignment.start,
-  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                           children: [
-  //                             Column(
-  //                               crossAxisAlignment: CrossAxisAlignment.start,
-  //                               children: [
-  //                                 Text(
-  //                                   "Client : ${salesToday![index].client.toString()}",
-  //                                   style: GoogleFonts.cairo(
-  //                                     color: Color(0xff000000),
-  //                                     fontWeight: FontWeight.bold,
-  //                                   ),
-  //                                 ),
-  //                                 Text(
-  //                                   "Utilisateur: ${salesToday![index].utilisateur.toString()}",
-  //                                   style: GoogleFonts.cairo(
-  //                                     color: Color(0xff000000),
-  //                                     fontWeight: FontWeight.bold,
-  //                                   ),
-  //                                 ),
-  //                                 Text(
-  //                                   "M_paiement : ${salesToday![index].mPaiement.toString()}",
-  //                                   style: GoogleFonts.cairo(
-  //                                     color: Color(0xff000000),
-  //                                     fontWeight: FontWeight.bold,
-  //                                   ),
-  //                                 ),
-  //                               ],
-  //                             ),
-  //                             Column(
-  //                               crossAxisAlignment: CrossAxisAlignment.end,
-  //                               children: [
-  //                                 Text(
-  //                                   "Nombre articles : ${salesToday![index].nombreArticle.toString()}",
-  //                                   style: GoogleFonts.cairo(
-  //                                     color: Color(0xff000000),
-  //                                     fontWeight: FontWeight.bold,
-  //                                   ),
-  //                                 ),
-  //                                 Text(
-  //                                   "Totale : ${salesToday![index].totale.toString()}",
-  //                                   style: GoogleFonts.cairo(
-  //                                     color: Color(0xff000000),
-  //                                     fontWeight: FontWeight.bold,
-  //                                   ),
-  //                                 ),
-  //                                 Text(
-  //                                   "Type : ${salesToday![index].type.toString().substring(0, 2)}",
-  //                                   style: GoogleFonts.cairo(
-  //                                     color: Color(0xff000000),
-  //                                     fontWeight: FontWeight.bold,
-  //                                   ),
-  //                                 ),
-  //                               ],
-  //                             )
-  //                           ],
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ),
-  //               SizedBox(height: 20),
-  //               Expanded(
-  //                 flex: 1,
-  //                 child: ClipRRect(
-  //                   borderRadius: const BorderRadius.only(
-  //                       topLeft: Radius.circular(15),
-  //                       topRight: Radius.circular(15)),
-  //                   child: Container(
-  //                     color: Color(0xff05668d),
-  //                     child: ListView.builder(
-  //                         shrinkWrap: true,
-  //                         itemCount: soldarticlesNum?.length,
-  //                         itemBuilder: (context, index) {
-  //                           return Padding(
-  //                             padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-  //                             child: Card(
-  //                               child: Padding(
-  //                                 padding: const EdgeInsets.all(10.0),
-  //                                 child: Column(
-  //                                   crossAxisAlignment:
-  //                                       CrossAxisAlignment.start,
-  //                                   mainAxisAlignment:
-  //                                       MainAxisAlignment.spaceBetween,
-  //                                   children: [
-  //                                     Text(
-  //                                       "Designation : ${soldarticlesNum![index].designation}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),
-  //                                     ),
-  //                                     SizedBox(height: 10),
-  //                                     Text(
-  //                                       "Quantité : ${soldarticlesNum![index].quantite}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),
-  //                                     ),
-  //                                     SizedBox(height: 10),
-  //                                     Row(
-  //                                       mainAxisAlignment:
-  //                                           MainAxisAlignment.spaceBetween,
-  //                                       children: [
-  //                                         Text(
-  //                                           "Prix : ${soldarticlesNum![index].prix}",
-  //                                           style: GoogleFonts.cairo(
-  //                                             color: Color(0xff000000),
-  //                                             fontWeight: FontWeight.bold,
-  //                                           ),
-  //                                         ),
-  //                                         Text(
-  //                                           "Remise : ${soldarticlesNum![index].remise}",
-  //                                           style: GoogleFonts.cairo(
-  //                                             color: Color(0xff000000),
-  //                                             fontWeight: FontWeight.bold,
-  //                                           ),
-  //                                         ),
-  //                                         Text(
-  //                                           "Totale : ${soldarticlesNum![index].total}",
-  //                                           style: GoogleFonts.cairo(
-  //                                             color: Color(0xff000000),
-  //                                             fontWeight: FontWeight.bold,
-  //                                           ),
-  //                                         ),
-  //                                         Text(
-  //                                           "TVA : ${soldarticlesNum![index].tva}",
-  //                                           style: GoogleFonts.cairo(
-  //                                             color: Color(0xff000000),
-  //                                             fontWeight: FontWeight.bold,
-  //                                           ),
-  //                                         ),
-  //                                       ],
-  //                                     )
-  //                                   ],
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                           );
-  //                         }),
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         );
-  //       });
-  // }
-
   Widget? returnDetails(index, context) {
     getReturnedArticlesNum(returnsToday![index].numerocommande);
     showModalBottomSheet(
@@ -563,89 +381,92 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.white,
                     size: 30,
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: returnsToday?.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Commande № : ${returnsToday![index].numerocommande.toString()}",
-                                        style: GoogleFonts.cairo(
-                                          color: Color(0xff000000),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Client : ${returnsToday![index].client.toString()}",
-                                        style: GoogleFonts.cairo(
-                                          color: Color(0xff000000),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                        child: FlatButton(
-                                          onPressed: () {
-                                            returnDetails(index, context);
-                                          },
-                                          child: Text(
-                                            "DETAILS",
-                                            style: GoogleFonts.cairo(
-                                              color: Color(0xffffffff),
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                  Expanded(
+                    flex: 1,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: returnsToday?.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Commande № : ${returnsToday![index].numerocommande.toString()}",
+                                          style: GoogleFonts.cairo(
+                                            color: Color(0xff000000),
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          color: Color(0xff023047),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "Nombre articles : ${returnsToday![index].nombreArticle.toString()}",
-                                        style: GoogleFonts.cairo(
-                                          color: Color(0xff000000),
-                                          fontWeight: FontWeight.bold,
+                                        Text(
+                                          "Client : ${returnsToday![index].client.toString()}",
+                                          style: GoogleFonts.cairo(
+                                            color: Color(0xff000000),
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        "Totale : ${returnsToday![index].total.toString()}",
-                                        style: GoogleFonts.cairo(
-                                          color: Color(0xff000000),
-                                          fontWeight: FontWeight.bold,
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          child: FlatButton(
+                                            onPressed: () {
+                                              returnDetails(index, context);
+                                            },
+                                            child: Text(
+                                              "DETAILS",
+                                              style: GoogleFonts.cairo(
+                                                color: Color(0xffffffff),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            color: Color(0xff023047),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "Nombre articles : ${returnsToday![index].nombreArticle.toString()}",
+                                          style: GoogleFonts.cairo(
+                                            color: Color(0xff000000),
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        "Utilisateur : ${returnsToday![index].utilisateur.toString()}",
-                                        style: GoogleFonts.cairo(
-                                          color: Color(0xff000000),
-                                          fontWeight: FontWeight.bold,
+                                        Text(
+                                          "Totale : ${returnsToday![index].total.toString()}",
+                                          style: GoogleFonts.cairo(
+                                            color: Color(0xff000000),
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                        Text(
+                                          "Utilisateur : ${returnsToday![index].utilisateur.toString()}",
+                                          style: GoogleFonts.cairo(
+                                            color: Color(0xff000000),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
+                          );
+                        }),
+                  ),
                 ],
               ),
             ),
