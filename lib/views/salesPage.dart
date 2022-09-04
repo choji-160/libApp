@@ -788,8 +788,9 @@ class _salesPageState extends State<salesPage> {
                                         getStatisticsPerDay();
                                       },
                                       controller: _dateRangePickerController,
-                                      onCancel: _dateRangePickerController
-                                          .selectedRange = null,
+                                      onCancel: () {
+                                        Navigator.pop(context);
+                                      },
                                       view: DateRangePickerView.month,
                                       monthViewSettings:
                                           DateRangePickerMonthViewSettings(

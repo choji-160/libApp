@@ -1042,10 +1042,10 @@ class _creditsPageState extends State<creditsPage> {
                                                             },
                                                             controller:
                                                                 _dateRangePickerController,
-                                                            onCancel:
-                                                                _dateRangePickerController
-                                                                        .selectedRange =
-                                                                    null,
+                                                            onCancel: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
                                                             view:
                                                                 DateRangePickerView
                                                                     .month,

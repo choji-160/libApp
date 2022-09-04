@@ -616,7 +616,7 @@ class _clientCreditsState extends State<clientCredits> {
                                                                       Colors.blue[
                                                                           900],
                                                                 ))
-                                                        : soldarticlesNum!.isEmpty == true? CircularProgressIndicator() : saleDetails(
+                                                        : saleDetails(
                                                             clientCredited
                                                                 .numeroCommande
                                                                 .toString());
