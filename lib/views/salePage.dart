@@ -75,16 +75,19 @@ class _salePageState extends State<salePage> {
     return Scaffold(
         drawerScrimColor: Color(0xff000000),
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
-          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.blue[900]),
+          backgroundColor: Color(0xfff4a261),
           elevation: 0,
           centerTitle: true,
         ),
         body: Visibility(
           visible: isLoaded,
-          replacement: Center(child: CircularProgressIndicator()),
+          replacement: Container(
+              color: Color(0xfff4a261),
+              child: Center(
+                  child: CircularProgressIndicator(color: Colors.white))),
           child: Container(
-            color: Color(0xfff4a261) ,
+            color: Color(0xfff4a261),
             child: Column(
               children: [
                 Padding(
@@ -172,80 +175,86 @@ class _salePageState extends State<salePage> {
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
                         topRight: Radius.circular(15)),
-                    child: soldarticlesNum == null? Container(child: Center(child: CircularProgressIndicator())) : Container(
-                      color: Color(0xff05668d),
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: soldarticlesNum?.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                              child: Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Designation : ${soldarticlesNum?[index].designation}",
-                                        style: GoogleFonts.cairo(
-                                          color: Color(0xff000000),
-                                          fontWeight: FontWeight.bold,
+                    child: soldarticlesNum == null
+                        ? Container(
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.white)))
+                        : Container(
+                            color: Color(0xff05668d),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: soldarticlesNum?.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                    child: Card(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Designation : ${soldarticlesNum?[index].designation}",
+                                              style: GoogleFonts.cairo(
+                                                color: Color(0xff000000),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Text(
+                                              "Quantité : ${soldarticlesNum?[index].quantite}",
+                                              style: GoogleFonts.cairo(
+                                                color: Color(0xff000000),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Prix : ${soldarticlesNum?[index].prix}",
+                                                  style: GoogleFonts.cairo(
+                                                    color: Color(0xff000000),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "Remise : ${soldarticlesNum?[index].remise}",
+                                                  style: GoogleFonts.cairo(
+                                                    color: Color(0xff000000),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "Totale : ${soldarticlesNum?[index].total}",
+                                                  style: GoogleFonts.cairo(
+                                                    color: Color(0xff000000),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "TVA : ${soldarticlesNum?[index].tva}",
+                                                  style: GoogleFonts.cairo(
+                                                    color: Color(0xff000000),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(height: 10),
-                                      Text(
-                                        "Quantité : ${soldarticlesNum?[index].quantite}",
-                                        style: GoogleFonts.cairo(
-                                          color: Color(0xff000000),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "Prix : ${soldarticlesNum?[index].prix}",
-                                            style: GoogleFonts.cairo(
-                                              color: Color(0xff000000),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            "Remise : ${soldarticlesNum?[index].remise}",
-                                            style: GoogleFonts.cairo(
-                                              color: Color(0xff000000),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            "Totale : ${soldarticlesNum?[index].total}",
-                                            style: GoogleFonts.cairo(
-                                              color: Color(0xff000000),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            "TVA : ${soldarticlesNum?[index].tva}",
-                                            style: GoogleFonts.cairo(
-                                              color: Color(0xff000000),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                    ),
+                                    ),
+                                  );
+                                }),
+                          ),
                   ),
                 ),
               ],
