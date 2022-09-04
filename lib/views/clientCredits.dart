@@ -114,6 +114,7 @@ class _clientCreditsState extends State<clientCredits> {
           ? restSum += 0
           : restSum += clientCredited.rest!;
     }
+    // restSum = totalSum - avanceSum;
     if (articles != null) {
       setState(() {
         isLoaded = true;
@@ -195,198 +196,6 @@ class _clientCreditsState extends State<clientCredits> {
       return date.add(Duration(days: i));
     });
   }
-
-  // Widget? saleDetails(String num) {
-  //   getCreditedSale(num);
-  //   getSoldArticlesNum(num);
-  //   showModalBottomSheet(
-  //       backgroundColor: Color(0xfff4a261),
-  //       isScrollControlled: true,
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: const BorderRadius.only(
-  //             topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-  //       ),
-  //       context: context,
-  //       builder: (BuildContext buildcontext) {
-  //         return Container(
-  //           height: 600,
-  //           child: Column(
-  //             children: [
-  //               Padding(
-  //                 padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-  //                 child: Card(
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.all(10.0),
-  //                     child: Column(
-  //                       children: [
-  //                         Text(
-  //                           "Informations générales sur la commande : ${creditedSale![0].numeroCommande.toString()}",
-  //                           style: GoogleFonts.cairo(
-  //                             color: Color(0xff000000),
-  //                             fontWeight: FontWeight.bold,
-  //                           ),
-  //                         ),
-  //                         SizedBox(height: 5),
-  //                         Column(
-  //                           children: [
-  //                             Text("Date : ${creditedSale![0].dateVent.toString().substring(0,10)}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),),
-  //                             Row(
-  //                               crossAxisAlignment: CrossAxisAlignment.start,
-  //                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                               children: [
-  //                                 Column(
-  //                                   crossAxisAlignment: CrossAxisAlignment.start,
-  //                                   children: [
-  //                                     Text(
-  //                                       "Client : ${creditedSale![0].client.toString()}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),
-  //                                     ),
-  //                                     Text(
-  //                                       "Utilisateur: ${creditedSale![0].utilisateur.toString()}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),
-  //                                     ),
-  //                                     Text(
-  //                                       "M_paiement : ${creditedSale![0].mPaiement.toString()}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),
-  //                                     ),
-  //                                   ],
-  //                                 ),
-  //                                 Column(
-  //                                   crossAxisAlignment: CrossAxisAlignment.end,
-  //                                   children: [
-  //                                     Text(
-  //                                       "Nombre articles : ${creditedSale![0].nombreArticle.toString()}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),
-  //                                     ),
-  //                                     Text(
-  //                                       "Totale : ${creditedSale![0].totale.toString()}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),
-  //                                     ),
-  //                                     Text(
-  //                                       "Type : ${creditedSale![0].type.toString().substring(0, 2)}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),
-  //                                     ),
-  //                                   ],
-  //                                 )
-  //                               ],
-  //                             ),
-  //                           ],
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ),
-  //               SizedBox(height: 20),
-  //               Expanded(
-  //                 flex: 1,
-  //                 child: ClipRRect(
-  //                   borderRadius: const BorderRadius.only(
-  //                       topLeft: Radius.circular(15),
-  //                       topRight: Radius.circular(15)),
-  //                   child: Container(
-  //                     color: Color(0xff05668d),
-  //                     child: ListView.builder(
-  //                         shrinkWrap: true,
-  //                         itemCount: soldarticlesNum?.length,
-  //                         itemBuilder: (context, index) {
-  //                           return Padding(
-  //                             padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-  //                             child: Card(
-  //                               child: Padding(
-  //                                 padding: const EdgeInsets.all(10.0),
-  //                                 child: Column(
-  //                                   crossAxisAlignment:
-  //                                       CrossAxisAlignment.start,
-  //                                   mainAxisAlignment:
-  //                                       MainAxisAlignment.spaceBetween,
-  //                                   children: [
-  //                                     Text(
-  //                                       "Designation : ${soldarticlesNum![index].designation}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),
-  //                                     ),
-  //                                     SizedBox(height: 10),
-  //                                     Text(
-  //                                       "Quantité : ${soldarticlesNum![index].quantite}",
-  //                                       style: GoogleFonts.cairo(
-  //                                         color: Color(0xff000000),
-  //                                         fontWeight: FontWeight.bold,
-  //                                       ),
-  //                                     ),
-  //                                     SizedBox(height: 10),
-  //                                     Row(
-  //                                       mainAxisAlignment:
-  //                                           MainAxisAlignment.spaceBetween,
-  //                                       children: [
-  //                                         Text(
-  //                                           "Prix : ${soldarticlesNum![index].prix}",
-  //                                           style: GoogleFonts.cairo(
-  //                                             color: Color(0xff000000),
-  //                                             fontWeight: FontWeight.bold,
-  //                                           ),
-  //                                         ),
-  //                                         Text(
-  //                                           "Remise : ${soldarticlesNum![index].remise}",
-  //                                           style: GoogleFonts.cairo(
-  //                                             color: Color(0xff000000),
-  //                                             fontWeight: FontWeight.bold,
-  //                                           ),
-  //                                         ),
-  //                                         Text(
-  //                                           "Totale : ${soldarticlesNum![index].total}",
-  //                                           style: GoogleFonts.cairo(
-  //                                             color: Color(0xff000000),
-  //                                             fontWeight: FontWeight.bold,
-  //                                           ),
-  //                                         ),
-  //                                         Text(
-  //                                           "TVA : ${soldarticlesNum![index].tva}",
-  //                                           style: GoogleFonts.cairo(
-  //                                             color: Color(0xff000000),
-  //                                             fontWeight: FontWeight.bold,
-  //                                           ),
-  //                                         ),
-  //                                       ],
-  //                                     )
-  //                                   ],
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                           );
-  //                         }),
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         );
-  //       });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -779,6 +588,7 @@ class _clientCreditsState extends State<clientCredits> {
                                                                     null
                                                                 ? "Null"
                                                                 : "${clientCredited.rest!.toStringAsFixed(2)}",
+                                                                // : "${(clientCredited.total! - clientCredited.avance!).toStringAsFixed(2)}";
                                                             style: GoogleFonts
                                                                 .cairo(
                                                               color: Color(

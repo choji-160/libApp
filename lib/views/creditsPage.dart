@@ -852,6 +852,7 @@ class _creditsPageState extends State<creditsPage> {
         num.avance == null ? avanceSum += 0 : avanceSum += num.avance!;
         num.rest == null ? restSum += 0 : restSum += num.rest!;
       }
+      // restSum = totalSum - avanceSum;
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
