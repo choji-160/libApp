@@ -46,7 +46,8 @@ class _creditsPageState extends State<creditsPage> {
   List<ReturnedArticle>? returnedArticles;
   List<ReturnedArticle>? returnedArticlesNum;
   num? salessum;
-  num? creditssum;
+  num? creditsSumTotal;
+  num? creditsSumAvance;
   num? returnssum;
   List<String> searchWith = ["Date et N.Commande", "Nom Client"];
   int counter = 0;
@@ -465,17 +466,22 @@ class _creditsPageState extends State<creditsPage> {
     num periodCreditsSum = 0;
     creditsTotals.clear();
     for (var day in days) {
-      creditssum = 0;
+      creditsSumTotal = 0;
+      creditsSumAvance = 0;
       creditsToday = credits
           ?.where((element) =>
               element.date ==
               '${day.toString().substring(0, 10)}T00:00:00.000Z')
           .toList();
       for (int e = 0; e < creditsToday!.length; e++) {
-        creditssum = creditssum! +
+        creditsSumTotal = creditsSumTotal! +
             (creditsToday![e].total == null ? 0 : creditsToday![e].total!);
+        creditsSumAvance = creditsSumAvance! +
+            (creditsToday![e].avance == null ? 0 : creditsToday![e].avance!);
       }
-      creditsTotals.add(creditssum!.toStringAsFixed(2));
+      creditsTotals.add((creditsSumTotal! - creditsSumAvance!) < 0
+          ? 0.toStringAsFixed(2)
+          : (creditsSumTotal! - creditsSumAvance!).toStringAsFixed(2));
     }
 
     for (int e = 0; e < creditsTotals.length; e++) {
@@ -643,83 +649,106 @@ class _creditsPageState extends State<creditsPage> {
                                       ],
                                     ),
                                     for (var creditToday in creditsForTheDay!)
-                                      Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(15)),
-                                            child: Container(
-                                              color: Color(0xff023047),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
+                                      creditToday.numeroCommande == null
+                                          ? Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(15)),
+                                                child: Container(
+                                                  color: Color(0xff023047),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  "Date : ${creditToday.date.toString().substring(0, 10)}",
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .cairo(
+                                                                    color: Color(
+                                                                        0xffffffff),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  "Type : Reglement credit",
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .cairo(
+                                                                    color: Color(
+                                                                        0xffffffff),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                    "Montant de reglement : ${creditToday.avance == null ? "Null" : "${creditToday.avance!.toStringAsFixed(2)}"}",
+                                                                    style: GoogleFonts
+                                                                        .cairo(
+                                                                      color: Color(
+                                                                          0xffffffff),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    )),
+                                                              ],
+                                                            )
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ))
+                                          : Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(15)),
+                                                child: Container(
+                                                  color: Color(0xff023047),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
-                                                          Text(
-                                                              creditToday.total ==
-                                                                      null
-                                                                  ? "Totale : 0"
-                                                                  : "Totale ${creditToday.total!.toStringAsFixed(2)}",
-                                                              style: GoogleFonts.cairo(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      15)),
-                                                          Text(
-                                                              creditToday.avance ==
-                                                                      null
-                                                                  ? "Avance : 0"
-                                                                  : "Avance ${creditToday.avance!.toStringAsFixed(2)}",
-                                                              style: GoogleFonts.cairo(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      15)),
-                                                          Text(
-                                                              creditToday.rest ==
-                                                                      null
-                                                                  ? "Reste : 0"
-                                                                  : "Reste ${creditToday.rest!.toStringAsFixed(2)}",
-                                                              style: GoogleFonts.cairo(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      15)),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
                                                             children: [
                                                               Text(
-                                                                  "Client : ${creditToday.client}",
+                                                                  creditToday.total ==
+                                                                          null
+                                                                      ? "Totale : 0"
+                                                                      : "Totale ${creditToday.total!.toStringAsFixed(2)}",
                                                                   style: GoogleFonts.cairo(
                                                                       color: Colors
                                                                           .white,
@@ -728,11 +757,11 @@ class _creditsPageState extends State<creditsPage> {
                                                                               .bold,
                                                                       fontSize:
                                                                           15)),
-                                                              SizedBox(
-                                                                height: 5,
-                                                              ),
                                                               Text(
-                                                                  "N.Commande : ${creditToday.numeroCommande}",
+                                                                  creditToday.avance ==
+                                                                          null
+                                                                      ? "Avance : 0"
+                                                                      : "Avance ${creditToday.avance!.toStringAsFixed(2)}",
                                                                   style: GoogleFonts.cairo(
                                                                       color: Colors
                                                                           .white,
@@ -740,33 +769,82 @@ class _creditsPageState extends State<creditsPage> {
                                                                           FontWeight
                                                                               .bold,
                                                                       fontSize:
-                                                                          15))
+                                                                          15)),
+                                                              Text(
+                                                                  creditToday.rest ==
+                                                                          null
+                                                                      ? "Reste : 0"
+                                                                      : "Reste ${creditToday.rest!.toStringAsFixed(2)}",
+                                                                  style: GoogleFonts.cairo(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          15)),
                                                             ],
                                                           ),
-                                                          RaisedButton(
-                                                              color: Color(
-                                                                  0xff6b9080),
-                                                              child: Text(
-                                                                  "Details",
-                                                                  style: GoogleFonts.cairo(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                      "Client : ${creditToday.client}",
+                                                                      style: GoogleFonts.cairo(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontWeight: FontWeight
                                                                               .bold,
-                                                                      fontSize:
-                                                                          15)),
-                                                              onPressed: () {
-                                                                saleDetails(
-                                                                    creditToday
-                                                                        .numeroCommande!);
-                                                              })
-                                                        ],
-                                                      ),
-                                                    ]),
-                                              ),
-                                            ),
-                                          ))
+                                                                          fontSize:
+                                                                              15)),
+                                                                  SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  Text(
+                                                                      "N.Commande : ${creditToday.numeroCommande}",
+                                                                      style: GoogleFonts.cairo(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          fontSize:
+                                                                              15))
+                                                                ],
+                                                              ),
+                                                              RaisedButton(
+                                                                  color: Color(
+                                                                      0xff6b9080),
+                                                                  child: Text(
+                                                                      "Details",
+                                                                      style: GoogleFonts.cairo(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          fontSize:
+                                                                              15)),
+                                                                  onPressed:
+                                                                      () {
+                                                                    saleDetails(
+                                                                        creditToday
+                                                                            .numeroCommande!);
+                                                                  })
+                                                            ],
+                                                          ),
+                                                        ]),
+                                                  ),
+                                                ),
+                                              ))
                                   ],
                                 ),
                               )),
