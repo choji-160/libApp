@@ -691,6 +691,18 @@ class _creditsPageState extends State<creditsPage> {
                                                                   ),
                                                                 ),
                                                                 Text(
+                                                                  "Client : ${creditToday.client}",
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .cairo(
+                                                                    color: Color(
+                                                                        0xffffffff),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                                Text(
                                                                   "Type : Reglement credit",
                                                                   style:
                                                                       GoogleFonts
