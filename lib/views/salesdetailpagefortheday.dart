@@ -443,7 +443,7 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                         ),
                                       ),
                                       Text(
-                                        "Utilisateur : ${returnsToday![index].utilisateur.toString().substring(0, 2)}",
+                                        "Utilisateur : ${returnsToday![index].utilisateur.toString()}",
                                         style: GoogleFonts.cairo(
                                           color: Color(0xff000000),
                                           fontWeight: FontWeight.bold,

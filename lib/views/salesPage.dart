@@ -43,7 +43,8 @@ class _salesPageState extends State<salesPage> {
   List<ReturnedArticle>? returnedArticles;
   List<ReturnedArticle>? returnedArticlesNum;
   num? salessum;
-  num? creditssum;
+  num? creditsSumTotal;
+  num? creditsSumAvance;
   num? returnssum;
   var isLoaded = false;
 
@@ -408,7 +409,8 @@ class _salesPageState extends State<salesPage> {
     returnsTotals.clear();
     for (var day in days) {
       salessum = 0;
-      creditssum = 0;
+      creditsSumTotal = 0;
+      creditsSumAvance = 0;
       returnssum = 0;
       salesToday = sales
           ?.where((element) =>
@@ -424,8 +426,10 @@ class _salesPageState extends State<salesPage> {
               '${day.toString().substring(0, 10)}T00:00:00.000Z')
           .toList();
       for (int e = 0; e < creditsToday!.length; e++) {
-        creditssum = creditssum! +
+        creditsSumTotal = creditsSumTotal! +
             (creditsToday![e].total == null ? 0 : creditsToday![e].total!);
+        creditsSumAvance = creditsSumAvance! +
+            (creditsToday![e].avance == null ? 0 : creditsToday![e].avance!);
       }
       returnsToday = returns
           ?.where((element) =>
@@ -436,7 +440,10 @@ class _salesPageState extends State<salesPage> {
         returnssum = returnssum! + returnsToday![e].total!;
       }
       salesTotals.add(salessum!.toStringAsFixed(2));
-      creditsTotals.add(creditssum!.toStringAsFixed(2));
+      creditsTotals.add(((creditsSumTotal! - creditsSumAvance!) < 0
+          ? 0.toStringAsFixed(2)
+          : (creditsSumTotal! - creditsSumAvance!).toStringAsFixed(2)));
+      // creditsTotals.add((creditsSumTotal!).toStringAsFixed(2));
       returnsTotals.add(returnssum!.toStringAsFixed(2));
     }
 
