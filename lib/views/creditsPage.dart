@@ -850,9 +850,9 @@ class _creditsPageState extends State<creditsPage> {
       for (var num in creditedClient) {
         num.total == null ? totalSum += 0 : totalSum += num.total!;
         num.avance == null ? avanceSum += 0 : avanceSum += num.avance!;
-        num.rest == null ? restSum += 0 : restSum += num.rest!;
+        // num.rest == null ? restSum += 0 : restSum += num.rest!;
       }
-      // restSum = totalSum - avanceSum;
+      restSum = totalSum - avanceSum;
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
