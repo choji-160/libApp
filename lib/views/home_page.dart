@@ -21,8 +21,6 @@ import '../services/Credits.dart';
 import '../services/SoldArticles.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
-import '../model/pdf.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -805,14 +803,25 @@ class _HomePageState extends State<HomePage> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10)),
                                         child: FlatButton(
-                                          onPressed:()=> _createPDF(salesToday![index].numeroCommande.toString()),
-                                          child: Row(children: [Text(
-                                            "Ticket",
-                                            style: GoogleFonts.cairo(
-                                              color: Color(0xffffffff),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),SizedBox(width: 10,) ,Icon(Icons.receipt, color: Colors.white,)],),
+                                          onPressed: () {},
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Ticket",
+                                                style: GoogleFonts.cairo(
+                                                  color: Color(0xffffffff),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Icon(
+                                                Icons.receipt,
+                                                color: Colors.white,
+                                              )
+                                            ],
+                                          ),
                                           color: Color(0xff023047),
                                         ),
                                       )
@@ -885,15 +894,5 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
         ),
         body: homePageData());
-  }
-
-  Future<void> _createPDF(String comNum) async {
-    PdfDocument document = PdfDocument();
-    document.pages.add();
-
-    List<int> bytes = document.save() as List<int>;
-    document.dispose();
-
-    saveAndLaunchFile(bytes, '$comNum.pdf');
   }
 }
