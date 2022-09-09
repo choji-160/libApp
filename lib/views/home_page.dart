@@ -22,6 +22,7 @@ import '../services/SoldArticles.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+import '../model/pdf.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -804,7 +805,7 @@ class _HomePageState extends State<HomePage> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10)),
                                         child: FlatButton(
-                                          onPressed: _createPDF,
+                                          onPressed:()=> _createPDF(salesToday![index].numeroCommande.toString()),
                                           child: Row(children: [Text(
                                             "Ticket",
                                             style: GoogleFonts.cairo(
@@ -886,11 +887,13 @@ class _HomePageState extends State<HomePage> {
         body: homePageData());
   }
 
-  Future<void> _createPDF() async {
+  Future<void> _createPDF(String comNum) async {
     PdfDocument document = PdfDocument();
     document.pages.add();
 
     List<int> bytes = document.save() as List<int>;
     document.dispose();
+
+    saveAndLaunchFile(bytes, '$comNum.pdf');
   }
 }
