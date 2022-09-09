@@ -21,6 +21,7 @@ import '../services/Credits.dart';
 import '../services/SoldArticles.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -435,7 +436,8 @@ class _HomePageState extends State<HomePage> {
                                       ],
                                     ),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
                                         Text(
                                           "Nombre articles : ${returnsToday![index].nombreArticle.toString()}",
@@ -752,11 +754,15 @@ class _HomePageState extends State<HomePage> {
                                             Radius.circular(10)),
                                         child: FlatButton(
                                           onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                salePage(num:salesToday![index].numeroCommande.toString())));
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        salePage(
+                                                            num: salesToday![
+                                                                    index]
+                                                                .numeroCommande
+                                                                .toString())));
                                           },
                                           child: Text(
                                             "DETAILS",
@@ -794,6 +800,21 @@ class _HomePageState extends State<HomePage> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                        child: FlatButton(
+                                          onPressed: _createPDF,
+                                          child: Row(children: [Text(
+                                            "Ticket",
+                                            style: GoogleFonts.cairo(
+                                              color: Color(0xffffffff),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),SizedBox(width: 10,) ,Icon(Icons.receipt, color: Colors.white,)],),
+                                          color: Color(0xff023047),
+                                        ),
+                                      )
                                     ],
                                   )
                                 ],
@@ -822,6 +843,13 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   setState(() {
                     isLoaded = false;
+                    sales = null;
+                    soldarticles = null;
+                    articles = null;
+                    clients = null;
+                    credits = null;
+                    returns = null;
+                    returnedArticles = null;
                   });
                   setState(() {
                     getSale();
@@ -856,5 +884,13 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
         ),
         body: homePageData());
+  }
+
+  Future<void> _createPDF() async {
+    PdfDocument document = PdfDocument();
+    document.pages.add();
+
+    List<int> bytes = document.save() as List<int>;
+    document.dispose();
   }
 }
