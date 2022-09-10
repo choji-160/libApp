@@ -221,7 +221,7 @@ class _creditsPageState extends State<creditsPage> {
             barrierDismissible: true,
             builder: (BuildContext buildContext) => AlertDialog(
                   actions: [
-                    FlatButton(
+                    ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -833,9 +833,11 @@ class _creditsPageState extends State<creditsPage> {
                                                                               15))
                                                                 ],
                                                               ),
-                                                              RaisedButton(
-                                                                  color: Color(
-                                                                      0xff6b9080),
+                                                              ElevatedButton(
+                                                                  style: ElevatedButton.styleFrom(
+                                                                      backgroundColor:
+                                                                          Color(
+                                                                              0xff6b9080)),
                                                                   child: Text(
                                                                       "Details",
                                                                       style: GoogleFonts.cairo(
@@ -993,8 +995,9 @@ class _creditsPageState extends State<creditsPage> {
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15)),
-                                  RaisedButton(
-                                      color: Color(0xff6b9080),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xff6b9080)),
                                       child: Text("Details",
                                           style: GoogleFonts.cairo(
                                               color: Colors.white,
@@ -1103,8 +1106,10 @@ class _creditsPageState extends State<creditsPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            RaisedButton(
-                                                color: Colors.blue,
+                                            ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Colors.blue),
                                                 child: Text(
                                                     "cliquez pour choisir la période à vérifier",
                                                     style: GoogleFonts.cairo(

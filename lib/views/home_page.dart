@@ -418,7 +418,7 @@ class _HomePageState extends State<HomePage> {
                                         ClipRRect(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
-                                          child: FlatButton(
+                                          child: ElevatedButton(
                                             onPressed: () {
                                               returnDetails(index, context);
                                             },
@@ -429,7 +429,9 @@ class _HomePageState extends State<HomePage> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            color: Color(0xff023047),
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    Color(0xff023047)),
                                           ),
                                         )
                                       ],
@@ -751,7 +753,7 @@ class _HomePageState extends State<HomePage> {
                                       ClipRRect(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10)),
-                                        child: FlatButton(
+                                        child: ElevatedButton(
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -770,7 +772,9 @@ class _HomePageState extends State<HomePage> {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          color: Color(0xff023047),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Color(0xff023047)),
                                         ),
                                       )
                                     ],
@@ -802,8 +806,10 @@ class _HomePageState extends State<HomePage> {
                                       ClipRRect(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10)),
-                                        child: FlatButton(
-                                          onPressed: () {},
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            print("printed ticket");
+                                          },
                                           child: Row(
                                             children: [
                                               Text(
@@ -822,7 +828,9 @@ class _HomePageState extends State<HomePage> {
                                               )
                                             ],
                                           ),
-                                          color: Color(0xff023047),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Color(0xff023047)),
                                         ),
                                       )
                                     ],

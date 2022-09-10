@@ -188,7 +188,7 @@ class _salesPageState extends State<salesPage> {
             barrierDismissible: true,
             builder: (BuildContext buildContext) => AlertDialog(
                   actions: [
-                    FlatButton(
+                    ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -621,8 +621,8 @@ class _salesPageState extends State<salesPage> {
                                             color: Color(0xff000000),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15)),
-                                    RaisedButton(
-                                      color: Colors.blue,
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(backgroundColor:Colors.blue),
                                       onPressed: () {
                                         Navigator.push(
                                             context,
@@ -775,8 +775,8 @@ class _salesPageState extends State<salesPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      RaisedButton(
-                          color: Colors.blue,
+                      ElevatedButton(
+                                      style: ElevatedButton.styleFrom(backgroundColor:Colors.blue),
                           child: Text(
                               "cliquez pour choisir la période à vérifier",
                               style: GoogleFonts.cairo(

@@ -507,7 +507,7 @@ class _clientCreditsState extends State<clientCredits> {
                                                           BorderRadius.all(
                                                               Radius.circular(
                                                                   10)),
-                                                      child: FlatButton(
+                                                      child: ElevatedButton(
                                                         onPressed: () {
                                                           clientCredited
                                                                       .numeroCommande ==
@@ -521,7 +521,7 @@ class _clientCreditsState extends State<clientCredits> {
                                                                           buildContext) =>
                                                                       AlertDialog(
                                                                         actions: [
-                                                                          FlatButton(
+                                                                          ElevatedButton(
                                                                               onPressed: () {
                                                                                 Navigator.pop(context);
                                                                               },
@@ -544,8 +544,11 @@ class _clientCreditsState extends State<clientCredits> {
                                                                               .numeroCommande
                                                                               .toString())));
                                                         },
-                                                        color:
-                                                            Color(0xff023047),
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                                backgroundColor:
+                                                                    Color(
+                                                                        0xff023047)),
                                                         child: Text(
                                                           "DETAILS",
                                                           style:

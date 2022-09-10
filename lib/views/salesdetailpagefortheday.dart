@@ -411,7 +411,7 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                         ClipRRect(
                                           borderRadius:
                                               BorderRadius.all(Radius.circular(10)),
-                                          child: FlatButton(
+                                          child: ElevatedButton(
                                             onPressed: () {
                                               returnDetails(index, context);
                                             },
@@ -422,7 +422,7 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            color: Color(0xff023047),
+                                      style: ElevatedButton.styleFrom(backgroundColor:Color(0xff023047)),
                                           ),
                                         )
                                       ],
@@ -743,7 +743,7 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                       ClipRRect(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10)),
-                                        child: FlatButton(
+                                        child: ElevatedButton(
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -762,7 +762,7 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          color: Color(0xff023047),
+                                      style: ElevatedButton.styleFrom(backgroundColor:Color(0xff023047)),
                                         ),
                                       )
                                     ],
