@@ -42,6 +42,9 @@ dependencies:
   google_fonts: ^3.0.1
   syncfusion_flutter_datepicker: ^20.2.45
   kt_dart: ^0.10.0
+  pdf: ^3.8.3
+  open_file: ^2.1.1
+  google_fonts_arabic: ^1.1.7
 
 dev_dependencies:
   flutter_test:
@@ -70,9 +73,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - lib/assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -85,10 +87,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  #flutter:
   fonts:
-     - family: icomoon
-       fonts:
-         - asset: assets/fonts/icomoon.ttf
-  #
+    - family: NotoSansArabic
+      fonts:
+        - asset: fonts/NotoSansArabic-VariableFont_wdth_wght.ttf
+    - family: NotoNaskh
+      fonts:
+        - asset: fonts/NotoNaskhArabic-VariableFont_wght.ttf
+    - family: UthamnicScript
+      fonts:
+        - asset: fonts/KFGQPC Uthmanic Script HAFS Regular.otf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

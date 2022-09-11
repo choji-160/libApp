@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, must_call_super, sort_child_properties_last, unused_import, unused_local_variable, avoid_print, prefer_const_literals_to_create_immutables, duplicate_import, deprecated_member_use, body_might_complete_normally_nullable, sized_box_for_whitespace, unrelated_type_equality_checks, prefer_is_empty
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:librairiedumaroc/main.dart';
@@ -17,10 +19,13 @@ import 'package:librairiedumaroc/services/Returns.dart';
 import 'package:librairiedumaroc/services/Sales.dart';
 import 'package:librairiedumaroc/views/navBar.dart';
 import 'package:librairiedumaroc/views/salePage.dart';
+import '../api/pdf_api.dart';
 import '../services/Credits.dart';
 import '../services/SoldArticles.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -807,8 +812,41 @@ class _HomePageState extends State<HomePage> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10)),
                                         child: ElevatedButton(
-                                          onPressed: () {
-                                            print("printed ticket");
+                                          onPressed: () async {
+                                            String fileName = salesToday![index]
+                                                .numeroCommande
+                                                .toString()
+                                                .replaceAll("/", "-");
+                                            List prodsNames = [];
+                                            List prodsPrice = [];
+                                            List prodsQuantity = [];
+                                            List prodsRemise = [];
+                                            List prodsTotal = [];
+                                            List<SoldArticle> prod = [];
+                                            List<SoldArticle>? soldProducts =
+                                                soldarticles
+                                                    ?.where((element) =>
+                                                        element
+                                                            .numeroCommande ==
+                                                        salesToday![index]
+                                                            .numeroCommande)
+                                                    .toList();
+                                            for (var product in soldProducts!) {
+                                              prodsNames
+                                                  .add(product.designation);
+                                                  prodsPrice.add(product.prix);
+                                                  prodsQuantity.add(product.quantite);
+                                                  prodsRemise.add(product.remise);
+                                                  prodsTotal.add(product.remise);
+                                                  prod.add(product);
+                                            }
+                                            final pdfFile =
+                                                await PdfApi.generateTable(
+                                                    fileName,
+                                                    prod,
+                                                    salesToday![index].totale.toString()
+                                                    );
+                                            PdfApi.openFile(pdfFile);
                                           },
                                           child: Row(
                                             children: [

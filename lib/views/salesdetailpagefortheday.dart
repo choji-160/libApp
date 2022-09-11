@@ -17,6 +17,7 @@ import 'package:librairiedumaroc/services/Returns.dart';
 import 'package:librairiedumaroc/services/Sales.dart';
 import 'package:librairiedumaroc/views/navBar.dart';
 import 'package:librairiedumaroc/views/salePage.dart';
+import '../api/pdf_api.dart';
 import '../services/Credits.dart';
 import '../services/SoldArticles.dart';
 import 'package:intl/intl.dart';
@@ -389,10 +390,12 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                 padding: const EdgeInsets.all(10.0),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Commande № : ${returnsToday![index].numerocommande.toString()}",
@@ -409,8 +412,8 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                           ),
                                         ),
                                         ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.all(Radius.circular(10)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
                                           child: ElevatedButton(
                                             onPressed: () {
                                               returnDetails(index, context);
@@ -422,13 +425,16 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                      style: ElevatedButton.styleFrom(backgroundColor:Color(0xff023047)),
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    Color(0xff023047)),
                                           ),
                                         )
                                       ],
                                     ),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
                                         Text(
                                           "Nombre articles : ${returnsToday![index].nombreArticle.toString()}",
@@ -762,7 +768,9 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                      style: ElevatedButton.styleFrom(backgroundColor:Color(0xff023047)),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Color(0xff023047)),
                                         ),
                                       )
                                     ],
@@ -791,6 +799,68 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            String fileName = salesToday![index]
+                                                .numeroCommande
+                                                .toString()
+                                                .replaceAll("/", "-");
+                                            List prodsNames = [];
+                                            List prodsPrice = [];
+                                            List prodsQuantity = [];
+                                            List prodsRemise = [];
+                                            List prodsTotal = [];
+                                            List<SoldArticle> prod = [];
+                                            List<SoldArticle>? soldProducts =
+                                                soldarticles
+                                                    ?.where((element) =>
+                                                        element
+                                                            .numeroCommande ==
+                                                        salesToday![index]
+                                                            .numeroCommande)
+                                                    .toList();
+                                            for (var product in soldProducts!) {
+                                              prodsNames
+                                                  .add(product.designation);
+                                                  prodsPrice.add(product.prix);
+                                                  prodsQuantity.add(product.quantite);
+                                                  prodsRemise.add(product.remise);
+                                                  prodsTotal.add(product.tva);
+                                                  prod.add(product);
+                                            }
+                                            final pdfFile =
+                                                await PdfApi.generateTable(
+                                                    fileName,
+                                                    prod,
+                                                    salesToday![index].totale.toString()
+                                                    );
+                                            PdfApi.openFile(pdfFile);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Ticket",
+                                                style: GoogleFonts.cairo(
+                                                  color: Color(0xffffffff),
+                                                  fontWeight: FontWeight.bold,
+                                                ),),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Icon(
+                                                Icons.receipt,
+                                                color: Colors.white,
+                                              )
+                                            ],
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Color(0xff023047)),
+                                        ),
+                                      )
                                     ],
                                   )
                                 ],
