@@ -202,11 +202,11 @@ class _salePageState extends State<salePage> {
                                           }
                                           final pdfFile =
                                               await PdfApi.generateTable(
-                                                  fileName,
-                                                  prod,
-                                                  salesToday![0]
-                                                      .totale
-                                                      .toString());
+                                            fileName,
+                                            prod,
+                                            salesToday![0].totale.toString(),
+                                            salesToday![0].client.toString(),
+                                          );
                                           PdfApi.openFile(pdfFile);
                                         },
                                         child: Row(

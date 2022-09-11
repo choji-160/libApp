@@ -35,6 +35,7 @@ class PdfApi {
     String comNum,
     List<SoldArticle> prod,
     String Total,
+    String clientName,
   ) async {
     final font = await rootBundle.load('fonts/Cairo-VariableFont_wght.ttf');
     final pdf = Document();
@@ -60,25 +61,32 @@ class PdfApi {
                 child: Column(children: [
               Center(child: Image(MemoryImage(logo))),
               SizedBox(height: 10),
-              Row(children: [
-                Text("Numero Commande : $comNum",
-                    style: TextStyle(fontSize: 4)),
-                SizedBox(width: 5),
-                Text(
-                    "Date : ${prod[0].dateVentArticle.toString().substring(0, 10)}",
-                    style: TextStyle(fontSize: 4))
-              ]),
+              Text("Nom du client : $clientName",
+                  style: TextStyle(fontSize: 4)),
+              Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Numero Commande : $comNum",
+                        style: TextStyle(fontSize: 4)),
+                    SizedBox(width: 5),
+                    Text(
+                        "Date : ${prod[0].dateVentArticle.toString().substring(0, 10)}",
+                        style: TextStyle(fontSize: 4))
+                  ]),
               SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Container(
-                    width: 70,
-                    child: Column(children: [
-                      Text("Designation",
-                          style: TextStyle(
-                            fontSize: 5,
-                            fontFallback: [Font.ttf(font)],
-                          )),
-                    ])),
+                    width: 60,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Designation",
+                              style: TextStyle(
+                                fontSize: 5,
+                                fontFallback: [Font.ttf(font)],
+                              )),
+                        ])),
                 Expanded(
                     flex: 1,
                     child: Row(
@@ -118,12 +126,16 @@ class PdfApi {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
-                              width: 70,
+                              width: 60,
                               child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("${product.designation}",
-                                        textDirection: TextDirection.rtl,
+                                        textDirection: product.designation!
+                                                    .contains(RegExp('^[a-zA-Z]')) ==
+                                                true
+                                            ? TextDirection.ltr
+                                            : TextDirection.rtl,
                                         style: TextStyle(
                                             fontSize: 4,
                                             fontFallback: [Font.ttf(font)])),
