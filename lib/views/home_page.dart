@@ -25,7 +25,6 @@ import '../services/SoldArticles.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
