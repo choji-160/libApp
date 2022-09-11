@@ -799,68 +799,6 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                        child: ElevatedButton(
-                                          onPressed: () async {
-                                            String fileName = salesToday![index]
-                                                .numeroCommande
-                                                .toString()
-                                                .replaceAll("/", "-");
-                                            List prodsNames = [];
-                                            List prodsPrice = [];
-                                            List prodsQuantity = [];
-                                            List prodsRemise = [];
-                                            List prodsTotal = [];
-                                            List<SoldArticle> prod = [];
-                                            List<SoldArticle>? soldProducts =
-                                                soldarticles
-                                                    ?.where((element) =>
-                                                        element
-                                                            .numeroCommande ==
-                                                        salesToday![index]
-                                                            .numeroCommande)
-                                                    .toList();
-                                            for (var product in soldProducts!) {
-                                              prodsNames
-                                                  .add(product.designation);
-                                                  prodsPrice.add(product.prix);
-                                                  prodsQuantity.add(product.quantite);
-                                                  prodsRemise.add(product.remise);
-                                                  prodsTotal.add(product.tva);
-                                                  prod.add(product);
-                                            }
-                                            final pdfFile =
-                                                await PdfApi.generateTable(
-                                                    fileName,
-                                                    prod,
-                                                    salesToday![index].totale.toString()
-                                                    );
-                                            PdfApi.openFile(pdfFile);
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Ticket",
-                                                style: GoogleFonts.cairo(
-                                                  color: Color(0xffffffff),
-                                                  fontWeight: FontWeight.bold,
-                                                ),),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Icon(
-                                                Icons.receipt,
-                                                color: Colors.white,
-                                              )
-                                            ],
-                                          ),
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Color(0xff023047)),
-                                        ),
-                                      )
                                     ],
                                   )
                                 ],

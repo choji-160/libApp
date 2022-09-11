@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages, import_of_legacy_library_into_null_safe, unused_local_variable, prefer_const_constructors, unused_import, duplicate_import, non_constant_identifier_names
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -35,8 +36,7 @@ class PdfApi {
     List<SoldArticle> prod,
     String Total,
   ) async {
-    final font =
-        await rootBundle.load('fonts/KFGQPC Uthmanic Script HAFS Regular.otf');
+    final font = await rootBundle.load('fonts/Cairo-VariableFont_wght.ttf');
     final pdf = Document();
     final logo = (await rootBundle.load('lib/assets/black logo-8.png'))
         .buffer
@@ -52,6 +52,9 @@ class PdfApi {
         .toList();
     pdf.addPage(
       Page(
+          theme: ThemeData.withFont(
+            base: Font.ttf(font),
+          ),
           build: (context) {
             return Container(
                 child: Column(children: [
@@ -60,19 +63,105 @@ class PdfApi {
               Row(children: [
                 Text("Numero Commande : $comNum",
                     style: TextStyle(fontSize: 4)),
-                    SizedBox(width: 5),
-                Text("Date : ${prod[0].dateVentArticle.toString().substring(0,10)}",
+                SizedBox(width: 5),
+                Text(
+                    "Date : ${prod[0].dateVentArticle.toString().substring(0, 10)}",
                     style: TextStyle(fontSize: 4))
               ]),
               SizedBox(height: 10),
-              Table.fromTextArray(
-                  cellPadding: EdgeInsets.all(1),
-                  headerStyle:
-                      TextStyle(fontSize: 4, fontFallback: [Font.ttf(font)]),
-                  cellStyle:
-                      TextStyle(fontSize: 4, fontFallback: [Font.ttf(font)]),
-                  headers: ['Designation', 'PU', 'Qte', 'Remise', 'Total'],
-                  data: data),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                Container(
+                    width: 70,
+                    child: Column(children: [
+                      Text("Designation",
+                          style: TextStyle(
+                            fontSize: 5,
+                            fontFallback: [Font.ttf(font)],
+                          )),
+                    ])),
+                Expanded(
+                    flex: 1,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                              width: 20,
+                              child: Center(
+                                child:
+                                    Text("Prix", style: TextStyle(fontSize: 5)),
+                              )),
+                          Container(
+                              width: 20,
+                              child: Center(
+                                child:
+                                    Text("Qte", style: TextStyle(fontSize: 5)),
+                              )),
+                          Container(
+                            width: 20,
+                            child: Center(
+                                child: Text("Remise",
+                                    style: TextStyle(fontSize: 5))),
+                          ),
+                          Container(
+                              width: 20,
+                              child: Center(
+                                  child: Text("Totale",
+                                      style: TextStyle(fontSize: 5))))
+                        ])),
+              ]),
+              Divider(color: PdfColors.black),
+              Column(children: [
+                for (var product in prod)
+                  Container(
+                      child: Column(children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                              width: 70,
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text("${product.designation}",
+                                        textDirection: TextDirection.rtl,
+                                        style: TextStyle(
+                                            fontSize: 4,
+                                            fontFallback: [Font.ttf(font)])),
+                                  ])),
+                          Expanded(
+                              flex: 1,
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                        width: 20,
+                                        child: Center(
+                                          child: Text("${product.prix}",
+                                              style: TextStyle(fontSize: 4)),
+                                        )),
+                                    Container(
+                                        width: 20,
+                                        child: Center(
+                                          child: Text("${product.quantite}",
+                                              style: TextStyle(fontSize: 4)),
+                                        )),
+                                    Container(
+                                      width: 20,
+                                      child: Center(
+                                          child: Text("${product.remise}",
+                                              style: TextStyle(fontSize: 4))),
+                                    ),
+                                    Container(
+                                        width: 20,
+                                        child: Center(
+                                            child: Text("${product.tva}",
+                                                style: TextStyle(fontSize: 4))))
+                                  ])),
+                        ]),
+                    Divider(color: PdfColors.black)
+                  ]))
+              ]),
               SizedBox(height: 10),
               Text("Totale : $Total")
             ]));

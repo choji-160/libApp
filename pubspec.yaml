@@ -98,5 +98,11 @@ flutter:
     - family: UthamnicScript
       fonts:
         - asset: fonts/KFGQPC Uthmanic Script HAFS Regular.otf
+    - family: BahijJanna
+      fonts:
+        - asset: fonts/Bahij Janna-Regular.ttf
+    - family: Cairo
+      fonts:
+        - asset: fonts/Cairo-VariableFont_wght.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
