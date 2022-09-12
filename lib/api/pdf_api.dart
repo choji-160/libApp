@@ -77,7 +77,7 @@ class PdfApi {
               SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Container(
-                    width: 60,
+                    width: 50,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -126,7 +126,7 @@ class PdfApi {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
-                              width: 60,
+                              width: 50,
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
