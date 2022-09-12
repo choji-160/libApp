@@ -864,13 +864,6 @@ class _salesPageState extends State<salesPage> {
                                       showActionButtons: true,
                                       onSubmit: (val) {
                                         getStatisticsPerDay();
-                                        // kIsWeb
-                                        //     ? getStatisticsPerDay()
-                                        //     : Platform.isIOS
-                                        //         ? getStatisticsPerDay()
-                                        //         : Platform.isAndroid
-                                        //             ? getStatisticsPerDay()
-                                        //             : getStatisticsPerDay();
                                       },
                                       controller: _dateRangePickerController,
                                       onCancel: () {
