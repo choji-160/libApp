@@ -77,12 +77,24 @@ class _articlesPageState extends State<articlesPage> {
   }
 
   final articleNameController = TextEditingController();
-  void searchClient(String value) {
+  final articleCodeBarreController = TextEditingController();
+  void searchArticleName(String value) {
     setState(() {
       result = articles!;
     });
     final suggestions = articles!.where((element) {
       final article = element.designation.toString().toLowerCase();
+      final input = value.toLowerCase();
+      return article.contains(input);
+    }).toList();
+    setState(() => result = suggestions);
+  }
+  void searchArticleCodeBarre(String value) {
+    setState(() {
+      result = articles!;
+    });
+    final suggestions = articles!.where((element) {
+      final article = element.codeBarre.toString().toLowerCase();
       final input = value.toLowerCase();
       return article.contains(input);
     }).toList();
@@ -123,7 +135,19 @@ class _articlesPageState extends State<articlesPage> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(color: Colors.blue))),
-                    onChanged: searchClient,
+                    onChanged: searchArticleName,
+                  )),
+              Container(
+                  margin: EdgeInsets.fromLTRB(16,0,16,0),
+                  child: TextField(
+                    controller: articleCodeBarreController,
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.warehouse),
+                        hintText: "Code barre",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(color: Colors.blue))),
+                    onChanged: searchArticleCodeBarre,
                   )),
               SizedBox(
                 height: 10,
@@ -161,13 +185,6 @@ class _articlesPageState extends State<articlesPage> {
                                           ),
                                         ),
                                         SizedBox(height: 5),
-                                            Text(
-                                              "date : ${result?[index].datee}",
-                                              style: GoogleFonts.cairo(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
