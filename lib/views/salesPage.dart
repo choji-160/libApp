@@ -1,4 +1,7 @@
 // ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, sort_child_properties_last
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:librairiedumaroc/views/salesdetailpagefortheday.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flutter/material.dart';
@@ -861,6 +864,13 @@ class _salesPageState extends State<salesPage> {
                                       showActionButtons: true,
                                       onSubmit: (val) {
                                         getStatisticsPerDay();
+                                        // kIsWeb
+                                        //     ? getStatisticsPerDay()
+                                        //     : Platform.isIOS
+                                        //         ? getStatisticsPerDay()
+                                        //         : Platform.isAndroid
+                                        //             ? getStatisticsPerDay()
+                                        //             : getStatisticsPerDay();
                                       },
                                       controller: _dateRangePickerController,
                                       onCancel: () {
