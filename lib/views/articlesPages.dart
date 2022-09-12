@@ -86,7 +86,6 @@ class _articlesPageState extends State<articlesPage> {
       final input = value.toLowerCase();
       return article.contains(input);
     }).toList();
-    print(suggestions.length);
     setState(() => result = suggestions);
   }
 
@@ -162,6 +161,13 @@ class _articlesPageState extends State<articlesPage> {
                                           ),
                                         ),
                                         SizedBox(height: 5),
+                                            Text(
+                                              "date : ${result?[index].datee}",
+                                              style: GoogleFonts.cairo(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
