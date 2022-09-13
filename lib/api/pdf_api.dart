@@ -128,11 +128,16 @@ class PdfApi {
                           Container(
                               width: 50,
                               child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: product.designation!
+                                              .contains(RegExp('^[a-zA-Z]')) ==
+                                          true
+                                      ? CrossAxisAlignment.start
+                                      : CrossAxisAlignment.end,
                                   children: [
                                     Text("${product.designation}",
                                         textDirection: product.designation!
-                                                    .contains(RegExp('^[a-zA-Z]')) ==
+                                                    .contains(
+                                                        RegExp('^[a-zA-Z]')) ==
                                                 true
                                             ? TextDirection.ltr
                                             : TextDirection.rtl,

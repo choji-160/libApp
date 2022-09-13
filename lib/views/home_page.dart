@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
     }
     creditssum = 0;
     for (int e = 0; e < creditsToday!.length; e++) {
-      creditssum += creditsToday![e].total!;
+      creditssum += creditsToday![e].total == null ? 0 : creditsToday![e].total!;
     }
     returnssum = 0;
     for (int e = 0; e < returnsToday!.length; e++) {

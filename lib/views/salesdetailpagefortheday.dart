@@ -59,98 +59,56 @@ class _salesdetailpageforthedayState extends State<salesdetailpagefortheday> {
     super.initState();
 
     //fetch data from api
-    getSale();
-    getSoldArticle();
-    getArticle();
-    getClient();
-    getCredit();
+    getData();
     getRegistryTotal();
-    getReturns();
-    getReturnedAtricles();
   }
 
-  getSale() async {
+  getData() async {
     sales = await Sales().getSales();
+    soldarticles = await SoldArticles().getSoldArticles();
+    articles = await Articles().getArticles();
+    clients = await Clients().getClients();
+    credits = await Credits().getCredits();
+    returns = await Returns().getReturns();
+    returnedArticles = await ReturnedArticles().getReturnedAtricles();
     salesToday = sales
         ?.where((element) => element.dateVent == '${now}T00:00:00.000Z')
         .toList();
-    for (int e = 0; e < salesToday!.length; e++) {
-      salessum += salesToday![e].totale!;
-    }
-    if (sales != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getSoldArticle() async {
-    soldarticles = await SoldArticles().getSoldArticles();
-    if (soldarticles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getArticle() async {
-    articles = await Articles().getArticles();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getClient() async {
-    clients = await Clients().getClients();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getCredit() async {
-    credits = await Credits().getCredits();
     creditsToday = credits
         ?.where((element) => element.date == '${now}T00:00:00.000Z')
         .toList();
-    for (int e = 0; e < creditsToday!.length; e++) {
-      creditssum += creditsToday![e].total!;
-    }
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getReturns() async {
-    returns = await Returns().getReturns();
     returnsToday = returns
         ?.where((element) => element.dateRetour == '${now}T00:00:00.000Z')
         .toList();
+    salessum = 0;
+    for (int e = 0; e < salesToday!.length; e++) {
+      salessum += salesToday![e].totale!;
+    }
+    creditssum = 0;
+    for (int e = 0; e < creditsToday!.length; e++) {
+      creditssum += creditsToday![e].total == null ? 0 : creditsToday![e].total!;
+    }
+    returnssum = 0;
     for (int e = 0; e < returnsToday!.length; e++) {
       returnssum += returnsToday![e].total!;
     }
     returnlength = returnsToday!.length;
-    if (articles != null) {
+
+    if (sales != null &&
+        salesToday != null &&
+        soldarticles != null &&
+        articles != null &&
+        clients != null &&
+        credits != null &&
+        creditsToday != null &&
+        returns != null &&
+        returnsToday != null &&
+        returnedArticles != null) {
       setState(() {
         isLoaded = true;
       });
     }
   }
-
-  getReturnedAtricles() async {
-    returnedArticles = await ReturnedArticles().getReturnedAtricles();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
   Text? getRegistryTotal() {
     num regTotal = salessum - creditssum - returnssum;
     getRegTotal() {
