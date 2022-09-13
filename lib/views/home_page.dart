@@ -89,7 +89,8 @@ class _HomePageState extends State<HomePage> {
     }
     creditssum = 0;
     for (int e = 0; e < creditsToday!.length; e++) {
-      creditssum += creditsToday![e].total == null ? 0 : creditsToday![e].total!;
+      creditssum +=
+          creditsToday![e].total == null ? 0 : creditsToday![e].total!;
     }
     returnssum = 0;
     for (int e = 0; e < returnsToday!.length; e++) {
@@ -790,23 +791,19 @@ class _HomePageState extends State<HomePage> {
                   setState(() {
                     isLoaded = false;
                     sales = null;
+                    salesToday = null;
                     soldarticles = null;
                     articles = null;
                     clients = null;
                     credits = null;
+                    creditsToday = null;
                     returns = null;
+                    returnsToday = null;
                     returnedArticles = null;
                   });
                   setState(() {
                     getData();
                     getRegistryTotal();
-                    // getSale();
-                    // getSoldArticle();
-                    // getArticle();
-                    // getClient();
-                    // getCredit();
-                    // getReturns();
-                    // getReturnedAtricles();
                   });
                   Visibility(
                     child: homePageData(),
