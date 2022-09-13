@@ -35,7 +35,6 @@ class _creditsPageState extends State<creditsPage> {
   DateTime datetime =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   List<Sale>? sales;
-  List<Sale>? salesToday;
   List<SoldArticle>? soldarticles;
   List<SoldArticle>? soldarticlesNum;
   List<Article>? articles;
@@ -61,53 +60,18 @@ class _creditsPageState extends State<creditsPage> {
     super.initState();
 
     //fetch data from api
-    getSale();
-    getSoldArticle();
-    getArticle();
-    getClient();
-    getCredit();
-    getReturns();
-    getReturnedAtricles();
+    getData();
   }
 
-  getSale() async {
+
+  getData() async {
     sales = await Sales().getSales();
-    if (sales != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getSoldArticle() async {
     soldarticles = await SoldArticles().getSoldArticles();
-    if (soldarticles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getArticle() async {
     articles = await Articles().getArticles();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getClient() async {
     clients = await Clients().getClients();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getCredit() async {
     credits = await Credits().getCredits();
+    returns = await Returns().getReturns();
+    returnedArticles = await ReturnedArticles().getReturnedAtricles();
     for (var client in credits!) {
       bool exists = false;
       for (var creditedClient in creditedClients) {
@@ -131,31 +95,20 @@ class _creditsPageState extends State<creditsPage> {
         results.add(client.client);
       }
     }
-    if (articles != null) {
+
+    if (sales != null &&
+        soldarticles != null &&
+        articles != null &&
+        clients != null &&
+        credits != null &&
+        returns != null &&
+        returnedArticles != null) {
       setState(() {
         isLoaded = true;
       });
     }
   }
-
-  getReturns() async {
-    returns = await Returns().getReturns();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getReturnedAtricles() async {
-    returnedArticles = await ReturnedArticles().getReturnedAtricles();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
+  
   getSoldArticlesNum(String? num) {
     soldarticlesNum = soldarticles
         ?.where((element) => element.numeroCommande == num)
