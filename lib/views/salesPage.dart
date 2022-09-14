@@ -95,22 +95,7 @@ class _salesPageState extends State<salesPage> {
 
   String? startDate;
   String? endDate;
-
-  // _onSelectedChanged(
-  //     DateRangePickerSelectionChangedArgs
-  //         dateRangePickerSelectionChangedArgs) async {
-  //   print(dateRangePickerSelectionChangedArgs.value.toString().contains("null"));
-  //   PickerDateRange dateRange =
-  //       dateRangePickerSelectionChangedArgs.value.toString().contains("null") ==
-  //               true
-  //           ? null
-  //           : await dateRangePickerSelectionChangedArgs.value;
-  //   if (dateRange != null) {
-  //     startDate = dateRange.toString().split(",")[0];
-  //     endDate = dateRange.toString().split(",")[1];
-  //   }
-  // }
-
+  
   late List<DateTime> days;
   updateDates(DateTime startDateAsDate, DateTime endDateAsDate) {
     DateTime startDateNullCheck() {
