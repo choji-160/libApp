@@ -44,27 +44,18 @@ class _salePageState extends State<salePage> {
     super.initState();
 
     //fetch data from api
-    getSale();
-    getSoldArticle();
+    getData();
   }
 
-  getSale() async {
+  getData()async{
     sales = await Sales().getSales();
+    soldarticles = await SoldArticles().getSoldArticles();
     salesToday =
         sales?.where((element) => element.numeroCommande == num).toList();
-    if (sales != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getSoldArticle() async {
-    soldarticles = await SoldArticles().getSoldArticles();
     soldarticlesNum = soldarticles
         ?.where((element) => element.numeroCommande == num)
         .toList();
-    if (soldarticles != null) {
+    if (sales != null && soldarticles != null && salesToday != null && soldarticlesNum != null) {
       setState(() {
         isLoaded = true;
       });

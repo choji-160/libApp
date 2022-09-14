@@ -57,72 +57,25 @@ class _salesPageState extends State<salesPage> {
     super.initState();
 
     //fetch data from api
-    getSale();
-    getSoldArticle();
-    getArticle();
-    getClient();
-    getCredit();
-    getReturns();
-    getReturnedAtricles();
+    getData();
   }
 
-  getSale() async {
+  getData() async {
     sales = await Sales().getSales();
-    if (sales != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getSoldArticle() async {
     soldarticles = await SoldArticles().getSoldArticles();
-    if (soldarticles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getArticle() async {
     articles = await Articles().getArticles();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getClient() async {
     clients = await Clients().getClients();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getCredit() async {
     credits = await Credits().getCredits();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getReturns() async {
     returns = await Returns().getReturns();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getReturnedAtricles() async {
     returnedArticles = await ReturnedArticles().getReturnedAtricles();
-    if (articles != null) {
+
+    if (sales != null &&
+        soldarticles != null &&
+        articles != null &&
+        clients != null &&
+        credits != null &&
+        returns != null &&
+        returnedArticles != null) {
       setState(() {
         isLoaded = true;
       });

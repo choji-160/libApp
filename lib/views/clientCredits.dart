@@ -54,53 +54,17 @@ class _clientCreditsState extends State<clientCredits> {
     super.initState();
 
     //fetch data from api
-    getSale();
-    getSoldArticle();
-    getArticle();
-    getClient();
-    getCredit();
-    getReturns();
-    getReturnedAtricles();
+    getData();
   }
 
-  getSale() async {
+  getData() async {
     sales = await Sales().getSales();
-    if (sales != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getSoldArticle() async {
     soldarticles = await SoldArticles().getSoldArticles();
-    if (soldarticles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getArticle() async {
     articles = await Articles().getArticles();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getClient() async {
     clients = await Clients().getClients();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getCredit() async {
     credits = await Credits().getCredits();
+    returns = await Returns().getReturns();
+    returnedArticles = await ReturnedArticles().getReturnedAtricles();
     creditedClient =
         credits!.where((element) => element.client == client).toList();
     for (var clientCredited in creditedClient) {
@@ -115,25 +79,14 @@ class _clientCreditsState extends State<clientCredits> {
       //     : restSum += clientCredited.rest!;
     }
     restSum = totalSum - avanceSum;
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getReturns() async {
-    returns = await Returns().getReturns();
-    if (articles != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-  }
-
-  getReturnedAtricles() async {
-    returnedArticles = await ReturnedArticles().getReturnedAtricles();
-    if (articles != null) {
+    if (sales != null &&
+        soldarticles != null &&
+        articles != null &&
+        clients != null &&
+        credits != null &&
+        returns != null &&
+        returnedArticles != null &&
+        creditedClient != null) {
       setState(() {
         isLoaded = true;
       });
