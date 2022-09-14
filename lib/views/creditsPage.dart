@@ -124,14 +124,6 @@ class _creditsPageState extends State<creditsPage> {
   String? startDate;
   String? endDate;
 
-  _onSelectedChanged(
-      DateRangePickerSelectionChangedArgs
-          dateRangePickerSelectionChangedArgs) async {
-    PickerDateRange dateRange = await dateRangePickerSelectionChangedArgs.value;
-    startDate = dateRange.toString().split(",")[0];
-    endDate = dateRange.toString().split(",")[1];
-  }
-
   late List<DateTime> days;
   updateDates(DateTime startDateAsDate, DateTime endDateAsDate) {
     DateTime startDateNullCheck() {
@@ -479,8 +471,8 @@ class _creditsPageState extends State<creditsPage> {
   }
 
   getCreditPerDay() {
-    updateDates(DateTime.parse(startDate!.substring(33, 43)),
-        DateTime.parse(endDate!.substring(10, 20)));
+    updateDates(DateTime.parse(startDate!.substring(0, 10)),
+        DateTime.parse(endDate!.substring(0, 10)));
     List creditsTotals = [];
     num periodCreditsSum = 0;
     creditsTotals.clear();
@@ -1245,7 +1237,16 @@ class _creditsPageState extends State<creditsPage> {
                                                                 DateTime.now()
                                                                     .day),
                                                             onSelectionChanged:
-                                                                _onSelectedChanged,
+                                                                
+                                          (DateRangePickerSelectionChangedArgs
+                                              args) {
+                                        setState(() {
+                                          startDate =
+                                              args.value.startDate.toString();
+                                          endDate =
+                                              args.value.endDate.toString();
+                                        });
+                                      },
                                                           ),
                                                         );
                                                       });

@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, sort_child_properties_last
-import 'dart:io';
+// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, camel_case_types, deprecated_member_use, unused_element, avoid_print, sized_box_for_whitespace, prefer_if_null_operators, unnecessary_null_comparison, body_might_complete_normally_nullable, unused_local_variable, prefer_is_empty, avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, sort_child_properties_last, file_names
 
 import 'package:flutter/foundation.dart';
 import 'package:librairiedumaroc/views/salesdetailpagefortheday.dart';
@@ -97,16 +96,25 @@ class _salesPageState extends State<salesPage> {
   String? startDate;
   String? endDate;
 
-  _onSelectedChanged(
-      DateRangePickerSelectionChangedArgs
-          dateRangePickerSelectionChangedArgs) async {
-    PickerDateRange dateRange = await dateRangePickerSelectionChangedArgs.value;
-    startDate = dateRange.toString().split(",")[0];
-    endDate = dateRange.toString().split(",")[1];
-  }
+  // _onSelectedChanged(
+  //     DateRangePickerSelectionChangedArgs
+  //         dateRangePickerSelectionChangedArgs) async {
+  //   print(dateRangePickerSelectionChangedArgs.value.toString().contains("null"));
+  //   PickerDateRange dateRange =
+  //       dateRangePickerSelectionChangedArgs.value.toString().contains("null") ==
+  //               true
+  //           ? null
+  //           : await dateRangePickerSelectionChangedArgs.value;
+  //   if (dateRange != null) {
+  //     startDate = dateRange.toString().split(",")[0];
+  //     endDate = dateRange.toString().split(",")[1];
+  //   }
+  // }
 
   late List<DateTime> days;
   updateDates(DateTime startDateAsDate, DateTime endDateAsDate) {
+    print(startDateAsDate);
+    print(endDateAsDate);
     DateTime startDateNullCheck() {
       return startDateAsDate == null
           ? DateTime(
@@ -418,8 +426,8 @@ class _salesPageState extends State<salesPage> {
   }
 
   getStatisticsPerDay() {
-    updateDates(DateTime.parse(startDate!.substring(33, 43)),
-        DateTime.parse(endDate!.substring(10, 20)));
+    updateDates(DateTime.parse(startDate!.substring(0, 10)),
+        DateTime.parse(endDate!.substring(0, 10)));
     List salesTotals = [];
     List creditsTotals = [];
     List returnsTotals = [];
@@ -833,7 +841,16 @@ class _salesPageState extends State<salesPage> {
                                           DateTime.now().year,
                                           DateTime.now().month,
                                           DateTime.now().day),
-                                      onSelectionChanged: _onSelectedChanged,
+                                      onSelectionChanged:
+                                          (DateRangePickerSelectionChangedArgs
+                                              args) {
+                                        setState(() {
+                                          startDate =
+                                              args.value.startDate.toString();
+                                          endDate =
+                                              args.value.endDate.toString();
+                                        });
+                                      },
                                     ),
                                   );
                                 });
