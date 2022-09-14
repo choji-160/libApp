@@ -113,8 +113,6 @@ class _salesPageState extends State<salesPage> {
 
   late List<DateTime> days;
   updateDates(DateTime startDateAsDate, DateTime endDateAsDate) {
-    print(startDateAsDate);
-    print(endDateAsDate);
     DateTime startDateNullCheck() {
       return startDateAsDate == null
           ? DateTime(
