@@ -11,7 +11,6 @@ class Credits {
         'GET',
         Uri.parse(
             '$apiKey/credits'));
-    print("credits : $apiKey");
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {

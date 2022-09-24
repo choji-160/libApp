@@ -12,7 +12,6 @@ class SoldArticles{
         'GET',
         Uri.parse(
             '$apiKey/soldarticles'));
-    print("soldarticles : $apiKey");
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {

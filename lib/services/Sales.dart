@@ -10,7 +10,6 @@ class Sales {
         'GET',
         Uri.parse(
             '$apiKey/sales'));
-    print("sales : $apiKey");
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {

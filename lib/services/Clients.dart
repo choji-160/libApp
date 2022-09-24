@@ -11,7 +11,6 @@ class Clients {
         'GET',
         Uri.parse(
             '$apiKey/clients'));
-    print("clients : $apiKey");
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {

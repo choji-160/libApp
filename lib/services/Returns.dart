@@ -11,7 +11,6 @@ class Returns {
         'GET',
         Uri.parse(
             '$apiKey/returns'));
-    print("returns : $apiKey");
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {
