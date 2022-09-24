@@ -183,9 +183,6 @@ class _clientsPageState extends State<clientsPage> {
                       fontSize: 25),
                 ),
                 onPressed: () {
-                  var records = mutableListFrom(clients!);
-                  var distinct = records.distinctBy((it) => it.nom).toList();
-                  print(distinct);
                 },
               )),
             )));

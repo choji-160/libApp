@@ -2,6 +2,7 @@
 
 import 'package:http/http.dart' as http;
 import '../model/soldArticle.dart';
+import '../views/apiKeyInput.dart';
 
 
 
@@ -10,8 +11,8 @@ class SoldArticles{
     var request = http.Request(
         'GET',
         Uri.parse(
-            'https://7655-196-119-154-24.eu.ngrok.io/soldarticles'));
-
+            '$apiKey/soldarticles'));
+    print("soldarticles : $apiKey");
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {

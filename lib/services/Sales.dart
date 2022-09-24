@@ -2,14 +2,15 @@
 
 import 'package:librairiedumaroc/model/sale.dart';
 import 'package:http/http.dart' as http;
+import 'package:librairiedumaroc/views/apiKeyInput.dart';
 
 class Sales {
   Future<List<Sale>?> getSales() async {
     var request = http.Request(
         'GET',
         Uri.parse(
-            'https://7655-196-119-154-24.eu.ngrok.io/sales'));
-
+            '$apiKey/sales'));
+    print("sales : $apiKey");
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {

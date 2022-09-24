@@ -3,11 +3,13 @@
 import 'package:http/http.dart' as http;
 import 'package:librairiedumaroc/model/article.dart';
 
+import '../views/apiKeyInput.dart';
+
 class Articles {
   Future<List<Article>?> getArticles() async {
     var request = http.Request(
-        'GET', Uri.parse('https://7655-196-119-154-24.eu.ngrok.io/articles'));
-
+        'GET', Uri.parse('$apiKey/articles'));
+    print("articles : $apiKey");
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {

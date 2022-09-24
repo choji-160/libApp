@@ -3,13 +3,15 @@
 import '../model/client.dart';
 import 'package:http/http.dart' as http;
 
+import '../views/apiKeyInput.dart';
+
 class Clients {
   Future<List<Client>?> getClients() async {
     var request = http.Request(
         'GET',
         Uri.parse(
-            'https://7655-196-119-154-24.eu.ngrok.io/clients'));
-
+            '$apiKey/clients'));
+    print("clients : $apiKey");
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {
