@@ -45,6 +45,7 @@ dependencies:
   pdf: ^3.8.3
   open_file: ^2.1.1
   google_fonts_arabic: ^1.1.7
+  input_history_text_field: ^0.2.0
 
 dev_dependencies:
   flutter_test:
