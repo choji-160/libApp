@@ -10,7 +10,7 @@ class Returns {
     var request = http.Request(
         'GET',
         Uri.parse(
-            '$apiKey/returns'));
+            '${apiKey}returns'));
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {

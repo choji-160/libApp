@@ -9,7 +9,7 @@ class Sales {
     var request = http.Request(
         'GET',
         Uri.parse(
-            '$apiKey/sales'));
+            '${apiKey}sales'));
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {

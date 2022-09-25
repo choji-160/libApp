@@ -10,7 +10,7 @@ class Credits {
     var request = http.Request(
         'GET',
         Uri.parse(
-            '$apiKey/credits'));
+            '${apiKey}credits'));
     http.StreamedResponse response = await request.send();
     var res = await response.stream.bytesToString();
     if (response.statusCode == 200) {

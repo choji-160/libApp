@@ -44,77 +44,62 @@ class _apiKeyInputState extends State<apiKeyInput> {
         )),
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Row(
-            children: [
-              Expanded(
-                  flex: 8,
-                  child: InputHistoryTextField(
-                      focusNode: focusNode,
-                      textEditingController: apiKeyController,
-                      historyKey: "01",
-                      onChanged: (value) {
-                        setState(() {
-                          apiKey = value;
-                        });
-                      },
-                      historyListItemLayoutBuilder: (controller, value, index) {
-                        return InkWell(
-                          onTap: () {
-                            apiKeyController.text = value.text;
-                            setState(() {
-                              apiKey = value.text;
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    value.textToSingleLine,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                padding: EdgeInsets.all(0),
-                                icon: Icon(
-                                  Icons.close,
-                                  size: 16,
-                                  color: Theme.of(context).disabledColor,
-                                ),
-                                onPressed: () {
-                                  controller.remove(value);
-                                },
-                              ),
-                            ],
+          child: InputHistoryTextField(
+              focusNode: focusNode,
+              textEditingController: apiKeyController,
+              historyKey: "01",
+              onChanged: (value) {
+                setState(() {
+                  apiKey = value;
+                });
+              },
+              historyListItemLayoutBuilder: (controller, value, index) {
+                return InkWell(
+                  onTap: () {
+                    apiKeyController.text = value.text;
+                    setState(() {
+                      apiKey = value.text;
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            value.textToSingleLine,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                        );
-                      })),
-              Expanded(
-                  child: Padding(
-                padding: EdgeInsets.all(8),
-                child: IconButton(
-                    padding: EdgeInsets.all(0),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage()),
-                      );
-                    },
-                    icon: Icon(
-                      Icons.arrow_circle_right,
-                      color: Colors.blue,
-                      size: 50,
-                    )),
-              ))
-            ],
-          ),
+                        ),
+                      ),
+                      IconButton(
+                        padding: EdgeInsets.all(0),
+                        icon: Icon(
+                          Icons.close,
+                          size: 16,
+                          color: Theme.of(context).disabledColor,
+                        ),
+                        onPressed: () {
+                          controller.remove(value);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }),
         ),
+        Padding(
+            padding: EdgeInsets.all(8),
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
+                child: Text("confimer")))
       ],
     ));
   }
